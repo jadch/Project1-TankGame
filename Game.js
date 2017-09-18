@@ -58,3 +58,32 @@ Player.prototype._removeBullets = function () {
   })
   this.bullets = new_bullets
 }
+
+
+// =====================
+//    Labyrinth class
+// =====================
+function Labyrinth (board_width, board_height) {
+  this.board_width = board_width
+  this.board_height = board_height
+
+  this.blocks = []
+  this.blocksAdded = 0
+  this.block_width = 50
+  this.block_height = 50
+}
+
+Labyrinth.prototype.buildBlock = function (x, y) {
+  // Game logic part
+  this.blocksAdded += 1
+  this.blocks.push({
+    x: x,
+    y: y,
+    width: this.block_width,
+    height: this.block_height,
+    id: this.blocksAdded
+  })
+
+  // Jquery part
+  $('#board').append(`<div class="labyrinthBlock" id="block${this.blocksAdded}"></div>`)
+}
