@@ -1,4 +1,6 @@
 // This file will handle the game flow and user interactions
+const TANK_SPEED_X = 1
+const TANK_SPEED_Y = 1
 const BULLET_SPEED_X = 2
 const BULLET_SPEED_Y = 0
 
@@ -17,14 +19,14 @@ function play () {
   // This function will handle the whole game logic, executing at each requestAnimationFrame
 
   // Player 1 moves
-  if (zPressed) player1.advance()
-  if (qPressed) player1.advance(0, 1)
-  if (dPressed) player1.advance(0, -1)
+  if (zPressed) player1.advance(TANK_SPEED_X, 0)
+  if (qPressed) player1.advance(0, TANK_SPEED_Y)
+  if (dPressed) player1.advance(0, -TANK_SPEED_Y)
 
   // Player 2 moves
-  if (oPressed) player2.advance()
-  if (kPressed) player2.advance(0, 1)
-  if (mPressed) player2.advance(0, -1)
+  if (oPressed) player2.advance(TANK_SPEED_X, 0)
+  if (kPressed) player2.advance(0, TANK_SPEED_Y)
+  if (mPressed) player2.advance(0, -TANK_SPEED_Y)
 
   // Player 1 shoots
   if (aPressed && performance.now() - p1_sinceLastShot > 500) {
