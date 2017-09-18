@@ -23,22 +23,21 @@ function play () {
 
   // Player 1 shoots
   if (zPressed && performance.now() - p1_sinceLastShot > 500) {
-    player1.shoot()
+    let bullet_id = player1.shoot()
     p1_sinceLastShot = performance.now() // avoids the player shooting multiple times immediately
-    $('#board').append('<div class="bullet" id="p1bullet' + player1.bullets.length + '"></div>') // adding the bullet to the DOM
+    $('#board').append('<div class="bullet" id="p1bullet' + bullet_id + '"></div>') // adding the bullet to the DOM
   }
 
   // Player 2 shoots
   if (upPressed && performance.now() - p2_sinceLastShot > 500) {
-    player2.shoot()
+    let bullet_id = player2.shoot()
     p2_sinceLastShot = performance.now()
-    $('#board').append('<div class="bullet" id="p2bullet' + player2.bullets.length + '"></div>')
+    $('#board').append('<div class="bullet" id="p2bullet' + bullet_id + '"></div>')
   }
 
   renderGame()
-  removeGarbage()
   requestAnimationFrame(play)
-
+  // console.log(player1.bullets, player2.bullets)
 }
 
 
@@ -54,20 +53,13 @@ function renderGame () {
 
   // Rendering the bullets of Player 1
   player1.bullets.forEach( (bullet, index) => {
-    $(`#p1bullet${index+1}`).css('transform', `translate(${player1.bullets[index].y}px, ${player1.bullets[index].x}px)`)
+    $(`#p1bullet${bullet.id}`).css('transform', `translate(${player1.bullets[index].y}px, ${player1.bullets[index].x}px)`)
   })
 
   // Rendering the bullets of Player 2
   player2.bullets.forEach( (bullet, index) => {
-    $(`#p2bullet${index+1}`).css('transform', `translate(${player2.bullets[index].y}px, ${player2.bullets[index].x}px)`)
+    $(`#p2bullet${bullet.id}`).css('transform', `translate(${player2.bullets[index].y}px, ${player2.bullets[index].x}px)`)
   })
-}
-
-// ==========================
-//    'Garbage collection'
-// ==========================
-function removeGarbage () {
-
 }
 
 
