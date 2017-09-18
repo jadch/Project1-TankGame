@@ -43,24 +43,19 @@ function play () {
 // ========================
 function renderGame () {
   // Rendering player 1
-  $('#P1').css('top', player1.position.x + 'px')
-  $('#P1').css('left', player1.position.y + 'px')
-  // $('#P1').css('transform', 'translate(-1px, 0px)')
+  $('#P1').css('transform', `translate(${player1.position.y}px, ${player1.position.x}px)`)
 
   // Rendering player 2
-  $('#P2').css('top', player2.position.x + 'px')
-  $('#P2').css('left', player2.position.y + 'px')
+  $('#P2').css('transform', `translate(${player2.position.y}px, ${player2.position.x}px)`)
 
   // Rendering the bullets of Player 1
   player1.bullets.forEach( (bullet, index) => {
-    $('#p1bullet' + (index + 1)).css('top', player1.bullets[index].x + 'px')
-    $('#p1bullet' + (index + 1)).css('left', player1.bullets[index].y + 'px')
+    $(`#p1bullet${index+1}`).css('transform', `translate(${player1.bullets[index].y}px, ${player1.bullets[index].x}px)`)
   })
 
   // Rendering the bullets of Player 2
   player2.bullets.forEach( (bullet, index) => {
-    $('#p2bullet' + (index + 1)).css('top', player2.bullets[index].x + 'px')
-    $('#p2bullet' + (index + 1)).css('left', player2.bullets[index].y + 'px')
+    $(`#p2bullet${index+1}`).css('transform', `translate(${player2.bullets[index].y}px, ${player2.bullets[index].x}px)`)
   })
 }
 
