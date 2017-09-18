@@ -9,7 +9,7 @@ $(document).ready( function () {
   var player1 = new Player(400, 250, 'p1')
   var player2 = new Player(400, 500, 'p2')
 
-  var laby = new Labyrinth(600, 600)
+  var laby = new Labyrinth(600, 500)
   laby.buildBlock(10, 100)
 
   play()
