@@ -95,6 +95,18 @@ Labyrinth.prototype.buildLine = function (x, y, num) {
 
   for (i = 1; i <= num; i++) {
     this.buildBlock(x, y)
-    x -= this.block_width
+    x -= this.block_height
+  }
+}
+
+Labyrinth.prototype.buildHorizontalLine = function (x, y, num) {
+  // Will build a horizontal line of num blocks starting from the given coords
+
+  var x = x
+  var y = y
+
+  for (i = 1; i <= num; i++) {
+    this.buildBlock(x, y)
+    y -= this.block_width
   }
 }
