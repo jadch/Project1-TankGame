@@ -4,10 +4,11 @@
 // ==================
 //    Player class
 // ==================
-function Player (x, y) {
+function Player (x, y, player_id) {
   this.position = {x: x, y: y}
   this.score = 0
   this.lives = 3
+  this.player_id = player_id
 
   this.bullets = [] //bullets shot by the player
   this.bulletsFired = 0
@@ -29,7 +30,8 @@ Player.prototype.shoot = function () {
   this.bullets.push({
     x: this.position.x,
     y: this.position.y,
-    id: bullet_id
+    id: bullet_id,
+    player_id: this.player_id
   })
   return bullet_id
 }
@@ -40,19 +42,19 @@ Player.prototype.bulletAdvance = function (dx = 0, dy = 0) {
     this.bullets[index].x -= dx
     this.bullets[index].y -= - dy
   })
-  // this._removeBullets() // after advancing the bullets we remove the out of screen ones
+  this._removeBullets() // after advancing the bullets we remove the out of screen ones
 }
 
 Player.prototype._removeBullets = function () {
   // This function will remove the bullets that are out of screen (x < 0)
   var new_bullets = []
   this.bullets.forEach( (bullet, index) => {
-    if (bullet.x > 0) {
+    if (bullet.x > -10) {
       new_bullets.push(bullet)
     }
-    // else {
-    //   $('p')
-    // }
+    else {
+      $(`#${bullet.player_id}bullet${bullet.id}`).remove()
+    }
   })
   this.bullets = new_bullets
 }

@@ -4,8 +4,8 @@ const BULLET_SPEED_Y = 0
 
 $(document).ready( function () {
   var game_over = false
-  var player1 = new Player(400, 250)
-  var player2 = new Player(400, 500)
+  var player1 = new Player(400, 250, 'p1')
+  var player2 = new Player(400, 500, 'p2')
 
   play()
 
@@ -37,7 +37,7 @@ function play () {
 
   renderGame()
   requestAnimationFrame(play)
-  // console.log(player1.bullets, player2.bullets)
+
 }
 
 
