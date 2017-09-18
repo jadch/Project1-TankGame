@@ -87,3 +87,14 @@ Labyrinth.prototype.buildBlock = function (x, y) {
   // Jquery part
   $('#board').append(`<div class="labyrinthBlock" id="block${this.blocksAdded}"></div>`)
 }
+
+Labyrinth.prototype.buildLine = function (x, y, num) {
+  // Will build a vertical line of num blocks starting from the given coords
+  var x = x
+  var y = y
+
+  for (i = 1; i <= num; i++) {
+    this.buildBlock(x, y)
+    x -= this.block_width
+  }
+}
