@@ -1,5 +1,6 @@
 // This file will handle the game flow and user interactions
-const BULLET_SPEED = 2
+const BULLET_SPEED_X = 2
+const BULLET_SPEED_Y = 0
 
 $(document).ready( function () {
   var game_over = false
@@ -17,6 +18,8 @@ function play () {
 
   player1.advance()
   player2.advance()
+  player1.bulletAdvance(BULLET_SPEED_X, BULLET_SPEED_Y)
+  player2.bulletAdvance(BULLET_SPEED_X, BULLET_SPEED_Y)
 
   // Player 1 shoots
   if (zPressed && performance.now() - p1_sinceLastShot > 500) {
@@ -33,6 +36,7 @@ function play () {
   }
 
   renderGame()
+  removeGarbage()
   requestAnimationFrame(play)
 
 }
@@ -58,6 +62,14 @@ function renderGame () {
     $(`#p2bullet${index+1}`).css('transform', `translate(${player2.bullets[index].y}px, ${player2.bullets[index].x}px)`)
   })
 }
+
+// ==========================
+//    'Garbage collection'
+// ==========================
+function removeGarbage () {
+
+}
+
 
 // ==============================
 //    Event listener functions

@@ -12,7 +12,7 @@ function Player (x, y) {
   this.bullets = [] //bullets shot by the player
 }
 
-// advance function
+// Advance function: updates the position of the player
 Player.prototype.advance = function (dx = 1, dy = 0) {
   this.position = {
     x: this.position.x - dx,
@@ -20,10 +20,18 @@ Player.prototype.advance = function (dx = 1, dy = 0) {
   }
 }
 
-// shoot function
+// Shoot function
 Player.prototype.shoot = function () {
   this.bullets.push({
     x: this.position.x,
     y: this.position.y
+  })
+}
+
+// Function that updates the position of the player's bullets
+Player.prototype.bulletAdvance = function (dx = 0, dy = 0) {
+  this.bullets.forEach( (bullet, index) => {
+    this.bullets[index].x -= dx
+    this.bullets[index].y -= - dy
   })
 }
