@@ -10,7 +10,7 @@ $(document).ready( function () {
   var player2 = new Player(400, 500, 'p2')
 
   var laby = new Labyrinth(600, 600)
-  laby.buildBlock(100, 100)
+  laby.buildBlock(10, 100)
 
   play()
 
@@ -65,13 +65,13 @@ function renderGame () {
   $('#P2').css('transform', `translate(${player2.position.y}px, ${player2.position.x}px)`)
 
   // Rendering the bullets of Player 1
-  player1.bullets.forEach( (bullet, index) => {
-    $(`#p1bullet${bullet.id}`).css('transform', `translate(${player1.bullets[index].y}px, ${player1.bullets[index].x}px)`)
+  player1.bullets.forEach( (bullet) => {
+    $(`#p1bullet${bullet.id}`).css('transform', `translate(${bullet.y}px, ${bullet.x}px)`)
   })
 
   // Rendering the bullets of Player 2
-  player2.bullets.forEach( (bullet, index) => {
-    $(`#p2bullet${bullet.id}`).css('transform', `translate(${player2.bullets[index].y}px, ${player2.bullets[index].x}px)`)
+  player2.bullets.forEach( (bullet) => {
+    $(`#p2bullet${bullet.id}`).css('transform', `translate(${bullet.y}px, ${bullet.x}px)`)
   })
 
   // Rendering the labyrinth blocks
