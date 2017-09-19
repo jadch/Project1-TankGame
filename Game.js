@@ -59,8 +59,10 @@ Player.prototype._removeBullets = function () {
   this.bullets = new_bullets
 }
 
-Player.prototype.updateLives = function () {
+Player.prototype.updateLives = function (default_position) {
+  // When a player loses life, this function will update the widget on the Top of the screen, and reset player's position
   this.lives -= 1
+  this.position = default_position
   $(`#${this.player_id}Lives`).text(this.lives + ' lives')
 }
 

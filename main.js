@@ -8,6 +8,10 @@ const LANDSCAPE_SPEED = 3
 const BOARD_HEIGHT = 600
 const BOARD_WIDTH = 500
 
+// Default starting positions
+const DEFAULT_POSITION_P1 = { x: 400, y: 100 }
+const DEFAULT_POSITION_P2 = { x: 400, y: 500 }
+
 $(document).ready( function () {
   var game_over = false
   var player1 = new Player(400, 100, 'p1')
@@ -60,8 +64,8 @@ function play () {
   player2.bulletAdvance(BULLET_SPEED_X, BULLET_SPEED_Y)
 
   // Checking if one of the players is out of screen
-  if (player1.position.x > BOARD_HEIGHT) player1.updateLives()
-  if (player2.position.x > BOARD_HEIGHT) player2.updateLives()
+  if (player1.position.x > BOARD_HEIGHT) player1.updateLives(DEFAULT_POSITION_P1)
+  if (player2.position.x > BOARD_HEIGHT) player2.updateLives(DEFAULT_POSITION_P2)
 
   renderGame()
   requestAnimationFrame(play)
