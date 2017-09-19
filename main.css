@@ -23,9 +23,12 @@
 
 .bullet {
   position: absolute;
-  background-color: red;
-  width: 5px;
-  height: 5px;
+  background-color: #3b3bdd;
+  width: 1px;
+  height: 35px;
+  border: solid 2px #3b3bdd;
+  box-shadow: inset 1px 1px 10px 2px #42b3f4;
+  border-radius: 10px;
 }
 
 .labyrinthBlock {
@@ -35,7 +38,6 @@
   height: 50px;
   border: solid 2px #8623B8;
   box-shadow: inset 0px 0px 10px 0px #8623B8;
-  box-sizing: border-box;
 }
 
 #board {

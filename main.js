@@ -1,7 +1,7 @@
 // This file will handle the game flow and user interactions
 const TANK_SPEED_X = 3
 const TANK_SPEED_Y = 2
-const BULLET_SPEED_X = 2
+const BULLET_SPEED_X = 8
 const BULLET_SPEED_Y = 0
 const LANDSCAPE_SPEED = 3
 
