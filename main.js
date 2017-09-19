@@ -14,14 +14,15 @@ const DEFAULT_POSITION_P2 = { x: 400, y: 500 }
 
 $(document).ready( function () {
   var game_over = false
+  var board_query = $('#board')
+
   var player1 = new Player(400, 100, 'p1')
   var player2 = new Player(400, 500, 'p2')
-
   var laby = new Labyrinth(BOARD_HEIGHT,  BOARD_WIDTH)
+
   laby.fillScreen()
 
   play()
-
 
 // ===================
 //    Play function
@@ -48,14 +49,14 @@ function play () {
   if (aPressed && performance.now() - p1_sinceLastShot > 500) {
     let bullet_id = player1.shoot()
     p1_sinceLastShot = performance.now() // avoids the player shooting multiple times immediately
-    $('#board').append('<div class="bullet" id="p1bullet' + bullet_id + '"></div>') // adding the bullet to the DOM
+    board_query.append('<div class="bullet" id="p1bullet' + bullet_id + '"></div>') // adding the bullet to the DOM
   }
 
   // Player 2 shoots
   if (iPressed && performance.now() - p2_sinceLastShot > 500) {
     let bullet_id = player2.shoot()
     p2_sinceLastShot = performance.now()
-    $('#board').append('<div class="bullet" id="p2bullet' + bullet_id + '"></div>')
+    board_query.append('<div class="bullet" id="p2bullet' + bullet_id + '"></div>')
   }
 
   laby.advance(LANDSCAPE_SPEED)
@@ -77,11 +78,15 @@ function play () {
 //    Rendering function
 // ========================
 function renderGame () {
+
+  var P1_query = $('#P1')
+  var P2_query = $('#P2')
+
   // Rendering player 1
-  $('#P1').css('transform', `translate(${player1.position.y}px, ${player1.position.x}px)`)
+  P1_query.css('transform', `translate(${player1.position.y}px, ${player1.position.x}px)`)
 
   // Rendering player 2
-  $('#P2').css('transform', `translate(${player2.position.y}px, ${player2.position.x}px)`)
+  P2_query.css('transform', `translate(${player2.position.y}px, ${player2.position.x}px)`)
 
   // Rendering the bullets of Player 1
   player1.bullets.forEach( (bullet) => {
