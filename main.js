@@ -12,7 +12,7 @@ $(document).ready( function () {
   var laby = new Labyrinth(600, 500)
   laby.buildBlock(10, 100)
   laby.buildLine(400, 350, 8)
-  laby.buildHorizontalLine(250, 350, 4)
+  laby.buildHorizontalLine(250, 300, 4)
 
   play()
 

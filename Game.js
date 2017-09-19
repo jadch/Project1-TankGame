@@ -101,7 +101,6 @@ Labyrinth.prototype.buildLine = function (x, y, num) {
 
 Labyrinth.prototype.buildHorizontalLine = function (x, y, num) {
   // Will build a horizontal line of num blocks starting from the given coords
-
   var x = x
   var y = y
 
