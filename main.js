@@ -5,8 +5,8 @@ const BULLET_SPEED_X = 8
 const BULLET_SPEED_Y = 0
 const LANDSCAPE_SPEED = 3
 
-const BOARD_HEIGHT = 600
-const BOARD_WIDTH = 500
+const BOARD_HEIGHT = 500
+const BOARD_WIDTH = 600
 
 // Default starting positions
 const DEFAULT_POSITION_P1 = { x: 400, y: 100 }
@@ -18,7 +18,9 @@ $(document).ready( function () {
 
   var player1 = new Player(400, 100, 'p1')
   var player2 = new Player(400, 500, 'p2')
+
   var laby = new Labyrinth(BOARD_HEIGHT,  BOARD_WIDTH)
+  var monster = new MonsterFactory()
 
   laby.fillScreen()
 
@@ -67,6 +69,8 @@ function play () {
   // Checking if one of the players is out of screen
   if (player1.position.x > BOARD_HEIGHT) player1.updateLives(DEFAULT_POSITION_P1)
   if (player2.position.x > BOARD_HEIGHT) player2.updateLives(DEFAULT_POSITION_P2)
+
+  monster.createMonsters()
 
   renderGame()
   requestAnimationFrame(play)

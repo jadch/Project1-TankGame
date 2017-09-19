@@ -172,3 +172,27 @@ Labyrinth.prototype.eternalConstruct = function () {
       this.buildSquare(-150, start_y, 50, 3)
     }
 }
+
+// ===================
+//    Monster class
+// ===================
+function MonsterFactory () {
+  this.monsters = []
+  this.monstersAdded = 0
+}
+
+MonsterFactory.prototype.createMonsters = function () {
+  var numberOfMonster = 4
+
+  while (this.monsters.length < numberOfMonster) {
+    this.monstersAdded += 1
+    var x = - Math.floor(Math.random() * 50 + 50) // -100 < x < -50
+    var y = Math.floor(Math.random() * 500) + 50 // 50 < y < 550
+    var monster = {
+      x: x,
+      y: y,
+      id: this.monstersAdded
+    }
+    this.monsters.push(monster)
+  }
+}
