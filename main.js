@@ -3,7 +3,7 @@ const TANK_SPEED_X = 3
 const TANK_SPEED_Y = 2
 const BULLET_SPEED_X = 2
 const BULLET_SPEED_Y = 0
-const LANDSCAPE_SPEED = 0.5
+const LANDSCAPE_SPEED = 3
 
 $(document).ready( function () {
   var game_over = false
@@ -52,7 +52,7 @@ function play () {
   }
 
   laby.advance(LANDSCAPE_SPEED)
-  // laby.eternalConstruct()
+  laby.eternalConstruct()
   player1.bulletAdvance(BULLET_SPEED_X, BULLET_SPEED_Y)
   player2.bulletAdvance(BULLET_SPEED_X, BULLET_SPEED_Y)
 

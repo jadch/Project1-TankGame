@@ -114,7 +114,7 @@ Labyrinth.prototype.fillScreen = function () {
   // Function that will create a proper wall that goes vertically along the screen
   var start_x = this.board_height
   var end_x = -150 // Building slightly higher than the screen so that 'advancing' doesnt result in glitches
-  var num = (start_x - end_x) / this.block_height
+  var num = (start_x - end_x) / (this.block_height * 2)
   var block_width = this.block_width
   var start_y = this.board_width / 2 - block_width / 2
 
@@ -162,7 +162,8 @@ Labyrinth.prototype.eternalConstruct = function () {
     var lastBlock = this.blocks[this.blocks.length - 1]
     var block_width = this.block_width
     if (lastBlock.x > -50) {
+      console.log('turnover')
       var start_y = this.board_width / 2 - block_width / 2
-      this.buildSquare(-50, start_y, 50, 3)
+      this.buildSquare(-150, start_y, 50, 3)
     }
 }
