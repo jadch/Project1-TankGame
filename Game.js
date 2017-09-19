@@ -112,12 +112,13 @@ Labyrinth.prototype.buildHorizontalLine = function (x, y, num) {
 
 Labyrinth.prototype.fillScreen = function () {
   // Function that will create a proper wall that goes vertically along the screen
-  var start_x = this.board_height - this.block_height
+  var start_x = this.board_height
   var end_x = -150 // Building slightly higher than the screen so that 'advancing' doesnt result in glitches
   var num = (start_x - end_x) / this.block_height
-  var start_y = this.board_width / 2 - this.block_width / 2
+  var block_width = this.block_width
+  var start_y = this.board_width / 2 - block_width / 2
 
-  this.buildLine(start_x, start_y, num)
+  this.buildSquare(start_x, start_y, 50, num)
 }
 
 // Advancing blocks
@@ -144,11 +145,24 @@ Labyrinth.prototype._removeBlocks = function () {
   this.blocks = new_blocks
 }
 
+// Building squares
+Labyrinth.prototype.buildSquare = function (start_x, start_y, separation, num) {
+  // Will build a series of 4x4 squares seperated by 'separation' pixels
+  var block_width = this.block_width
+  var block_height = this.block_height
+  for (var i = 0; i < num; i ++) {
+    this.buildLine(start_x, start_y, 2)
+    this.buildLine(start_x, start_y + block_width, 2)
+    start_x -= separation + 2 * block_height
+  }
+}
+
 Labyrinth.prototype.eternalConstruct = function () {
   // Builds a landscape, 4ever (and ever, and ever)
     var lastBlock = this.blocks[this.blocks.length - 1]
+    var block_width = this.block_width
     if (lastBlock.x > -50) {
-      var start_y = this.board_width / 2 - this.block_width / 2
-      this.buildLine(-50, start_y, 5)
+      var start_y = this.board_width / 2 - block_width / 2
+      this.buildSquare(-50, start_y, 50, 3)
     }
 }
