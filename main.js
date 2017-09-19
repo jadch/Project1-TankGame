@@ -1,9 +1,9 @@
 // This file will handle the game flow and user interactions
-const TANK_SPEED_X = 1
-const TANK_SPEED_Y = 1
+const TANK_SPEED_X = 3
+const TANK_SPEED_Y = 2
 const BULLET_SPEED_X = 2
 const BULLET_SPEED_Y = 0
-const LANDSCAPE_SPEED = 0.2
+const LANDSCAPE_SPEED = 0.5
 
 $(document).ready( function () {
   var game_over = false
@@ -31,6 +31,11 @@ function play () {
   if (oPressed) player2.advance(TANK_SPEED_X, 0)
   if (kPressed) player2.advance(0, TANK_SPEED_Y)
   if (mPressed) player2.advance(0, -TANK_SPEED_Y)
+
+  // If no forward movement, the tanks go back at Landscape speed
+  if (!zPressed) player1.advance(-LANDSCAPE_SPEED, 0)
+  if (!oPressed) player2.advance(-LANDSCAPE_SPEED, 0)
+
 
   // Player 1 shoots
   if (aPressed && performance.now() - p1_sinceLastShot > 500) {
