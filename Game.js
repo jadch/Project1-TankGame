@@ -63,7 +63,7 @@ Player.prototype._removeBullets = function () {
 // =====================
 //    Labyrinth class
 // =====================
-function Labyrinth (board_width, board_height) {
+function Labyrinth (board_height, board_width) {
   this.board_width = board_width
   this.board_height = board_height
 
@@ -118,4 +118,28 @@ Labyrinth.prototype.fillScreen = function () {
   var start_y = this.board_width / 2 - this.block_width / 2
 
   this.buildLine(start_x, start_y, num)
+}
+
+// Advancing blocks
+Labyrinth.prototype.advance = function (dx) {
+  this.blocks.forEach( (block) => {
+    block.x += dx
+  })
+  this._removeBlocks()
+}
+
+// Removing out-of-screen blocks
+Labyrinth.prototype._removeBlocks = function () {
+  var new_blocks = []
+  var board_width = this.board_width + 20 // +20px to avoid glitches
+
+  this.blocks.forEach( (block) => {
+    if (block.x < board_width) {
+      new_blocks.push(block)
+    }
+    else {
+      $(`#block${block.id}`).remove()
+    }
+  })
+  this.blocks = new_blocks
 }

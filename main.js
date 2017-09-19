@@ -3,10 +3,11 @@ const TANK_SPEED_X = 1
 const TANK_SPEED_Y = 1
 const BULLET_SPEED_X = 2
 const BULLET_SPEED_Y = 0
+const LANDSCAPE_SPEED = 0.2
 
 $(document).ready( function () {
   var game_over = false
-  var player1 = new Player(400, 250, 'p1')
+  var player1 = new Player(400, 100, 'p1')
   var player2 = new Player(400, 500, 'p2')
 
   var laby = new Labyrinth(600, 500)
@@ -45,6 +46,7 @@ function play () {
     $('#board').append('<div class="bullet" id="p2bullet' + bullet_id + '"></div>')
   }
 
+  laby.advance(LANDSCAPE_SPEED)
   player1.bulletAdvance(BULLET_SPEED_X, BULLET_SPEED_Y)
   player2.bulletAdvance(BULLET_SPEED_X, BULLET_SPEED_Y)
 
