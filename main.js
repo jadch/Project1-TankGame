@@ -47,6 +47,7 @@ function play () {
   }
 
   laby.advance(LANDSCAPE_SPEED)
+  laby.eternalConstruct()
   player1.bulletAdvance(BULLET_SPEED_X, BULLET_SPEED_Y)
   player2.bulletAdvance(BULLET_SPEED_X, BULLET_SPEED_Y)
 

@@ -113,7 +113,7 @@ Labyrinth.prototype.buildHorizontalLine = function (x, y, num) {
 Labyrinth.prototype.fillScreen = function () {
   // Function that will create a proper wall that goes vertically along the screen
   var start_x = this.board_height - this.block_height
-  var end_x = -100 // Building slightly higher than the screen so that 'advancing' doesnt result in glitches
+  var end_x = -150 // Building slightly higher than the screen so that 'advancing' doesnt result in glitches
   var num = (start_x - end_x) / this.block_height
   var start_y = this.board_width / 2 - this.block_width / 2
 
@@ -142,4 +142,13 @@ Labyrinth.prototype._removeBlocks = function () {
     }
   })
   this.blocks = new_blocks
+}
+
+Labyrinth.prototype.eternalConstruct = function () {
+  // Builds a landscape, 4ever (and ever, and ever)
+    var lastBlock = this.blocks[this.blocks.length - 1]
+    if (lastBlock.x > -50) {
+      var start_y = this.board_width / 2 - this.block_width / 2
+      this.buildLine(-50, start_y, 5)
+    }
 }
