@@ -4,6 +4,7 @@ const TANK_SPEED_Y = 2
 const BULLET_SPEED_X = 8
 const BULLET_SPEED_Y = 0
 const LANDSCAPE_SPEED = 3
+const MONSTER_SPEED = 1
 
 const BOARD_HEIGHT = 500
 const BOARD_WIDTH = 600
@@ -71,6 +72,7 @@ function play () {
   if (player2.position.x > BOARD_HEIGHT) player2.updateLives(DEFAULT_POSITION_P2)
 
   monster.createMonsters()
+  monster.advance(MONSTER_SPEED)
 
   renderGame()
   requestAnimationFrame(play)
@@ -105,6 +107,11 @@ function renderGame () {
   // Rendering the labyrinth blocks
   laby.blocks.forEach( (block) => {
     $(`#block${block.id}`).css('transform', `translate(${block.y}px, ${block.x}px)`)
+  })
+
+  // Rendering the monsters
+  monster.monsters.forEach( (monster) => {
+    $(`#monster${monster.id}`).css('transform', `translate(${monster.y}px, ${monster.x}px)`)
   })
 }
 

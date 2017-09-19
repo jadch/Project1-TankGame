@@ -186,7 +186,7 @@ MonsterFactory.prototype.createMonsters = function () {
 
   while (this.monsters.length < numberOfMonster) {
     this.monstersAdded += 1
-    var x = - Math.floor(Math.random() * 50 + 50) // -100 < x < -50
+    var x = - Math.floor(Math.random() * 200 + 100) // -300 < x < -100
     var y = Math.floor(Math.random() * 500) + 50 // 50 < y < 550
     var monster = {
       x: x,
@@ -194,5 +194,16 @@ MonsterFactory.prototype.createMonsters = function () {
       id: this.monstersAdded
     }
     this.monsters.push(monster)
+
+    // Jquery part
+    $('#board').append(`<img class="monsters" id="monster${this.monstersAdded}" src="src/alien.png">`)
   }
+}
+
+// Advance method, to move monsters forward
+MonsterFactory.prototype.advance = function (dx) {
+  this.monsters.forEach( (monster) => {
+    monster.x += dx
+  })
+  // ATTN: DONT FORGET TO ADD A REMOVE METHOD IF IT BECOMES NECESSARY
 }
