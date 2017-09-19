@@ -10,9 +10,7 @@ $(document).ready( function () {
   var player2 = new Player(400, 500, 'p2')
 
   var laby = new Labyrinth(600, 500)
-  laby.buildBlock(10, 100)
-  laby.buildLine(400, 350, 8)
-  laby.buildHorizontalLine(250, 300, 4)
+  laby.fillScreen()
 
   play()
 

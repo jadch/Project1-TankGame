@@ -109,3 +109,13 @@ Labyrinth.prototype.buildHorizontalLine = function (x, y, num) {
     y -= this.block_width
   }
 }
+
+Labyrinth.prototype.fillScreen = function () {
+  // Function that will create a proper wall that goes vertically along the screen
+  var start_x = this.board_height - this.block_height
+  var end_x = -100 // Building slightly higher than the screen so that 'advancing' doesnt result in glitches
+  var num = (start_x - end_x) / this.block_height
+  var start_y = this.board_width / 2 - this.block_width / 2
+
+  this.buildLine(start_x, start_y, num)
+}
