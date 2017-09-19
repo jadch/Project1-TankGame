@@ -59,6 +59,10 @@ Player.prototype._removeBullets = function () {
   this.bullets = new_bullets
 }
 
+Player.prototype.updateLives = function () {
+  this.lives -= 1
+  $(`#${this.player_id}Lives`).text(this.lives + ' lives')
+}
 
 // =====================
 //    Labyrinth class
@@ -162,7 +166,6 @@ Labyrinth.prototype.eternalConstruct = function () {
     var lastBlock = this.blocks[this.blocks.length - 1]
     var block_width = this.block_width
     if (lastBlock.x > -50) {
-      console.log('turnover')
       var start_y = this.board_width / 2 - block_width / 2
       this.buildSquare(-150, start_y, 50, 3)
     }

@@ -1,3 +1,18 @@
+#TopBar {
+  display: flex;
+  color: #FFFFFF;
+  font-family: Helvetica; /* temporary */
+  font-size: 0.8em;
+}
+
+#TopBar article:first-of-type {
+  margin-left: 10px;
+}
+
+#TopBar article:last-of-type {
+  margin-left: auto;
+  margin-right: 10px;
+}
 
 #P1, #P2 {
   width: 50px;

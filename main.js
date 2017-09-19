@@ -5,12 +5,15 @@ const BULLET_SPEED_X = 2
 const BULLET_SPEED_Y = 0
 const LANDSCAPE_SPEED = 3
 
+const BOARD_HEIGHT = 600
+const BOARD_WIDTH = 500
+
 $(document).ready( function () {
   var game_over = false
   var player1 = new Player(400, 100, 'p1')
   var player2 = new Player(400, 500, 'p2')
 
-  var laby = new Labyrinth(600, 500)
+  var laby = new Labyrinth(BOARD_HEIGHT,  BOARD_WIDTH)
   laby.fillScreen()
 
   play()
@@ -55,6 +58,10 @@ function play () {
   laby.eternalConstruct()
   player1.bulletAdvance(BULLET_SPEED_X, BULLET_SPEED_Y)
   player2.bulletAdvance(BULLET_SPEED_X, BULLET_SPEED_Y)
+
+  // Checking if one of the players is out of screen
+  if (player1.position.x > BOARD_HEIGHT) player1.updateLives()
+  if (player2.position.x > BOARD_HEIGHT) player2.updateLives()
 
   renderGame()
   requestAnimationFrame(play)
