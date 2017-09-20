@@ -195,7 +195,12 @@ MonsterFactory.prototype.createMonsters = function () {
   while (this.monsters.length < numberOfMonster) {
     this.monstersAdded += 1
     var x = - Math.floor(Math.random() * 200 + 100) // -300 < x < -100
-    var y = Math.floor(Math.random() * 500) + 50 // 50 < y < 550
+    var y = 0
+    var y1 = Math.floor(Math.random() * 445  + 55) // 55 < y1 < 500
+    var y2 = Math.floor(Math.random() * 420  + 625) // 625 < y2 < 1045
+    var choose_y = Math.random()
+    choose_y < 0.5 ? y = y1 : y = y2
+
     var monster = {
       x: x,
       y: y,
