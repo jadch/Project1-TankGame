@@ -245,14 +245,15 @@ MonsterFactory.prototype.detectShooting = function (bulletArray) {
     }
 
     for (var j = 0; j < monster_array_length; j++) {
+      var currentMonster = this.monsters[j]
       var monster = {
-        x: this.monsters[j].x,
-        y: this.monsters[j].y,
+        x: currentMonster.x,
+        y: currentMonster.y,
         width: 40,
         height: 40
       }
       if (collisionDetector(monster, bullet)) {
-        console.log('THERES BEEN A SHOOTING')
+        $(`#monster${currentMonster.id}`).remove()
       }
     }
   }
