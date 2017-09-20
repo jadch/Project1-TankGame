@@ -6,8 +6,8 @@ const BULLET_SPEED_Y = 0
 const LANDSCAPE_SPEED = 3
 const MONSTER_SPEED = 1
 
-const BOARD_HEIGHT = 500
-const BOARD_WIDTH = 600
+const BOARD_WIDTH = 1100
+const BOARD_HEIGHT = 700
 
 // Default starting positions
 const DEFAULT_POSITION_P1 = { x: 400, y: 100 }
