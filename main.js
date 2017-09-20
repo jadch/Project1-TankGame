@@ -1,4 +1,5 @@
-// This file will handle the game flow and user interactions
+// *** This file will handle the game flow and user interactions ***
+
 const TANK_SPEED_X = 3
 const TANK_SPEED_Y = 2
 const BULLET_SPEED_X = 8
@@ -9,23 +10,20 @@ const MONSTER_SPEED = 1
 const BOARD_WIDTH = 1100
 const BOARD_HEIGHT = 700
 
-// Default starting positions
-const DEFAULT_POSITION_P1 = { x: 400, y: 100 }
-const DEFAULT_POSITION_P2 = { x: 400, y: 500 }
+const DEFAULT_POSITION_P1 = { x: 400, y: 300 } // Default starting positions
+const DEFAULT_POSITION_P2 = { x: 400, y: 800 }
 
 $(document).ready( function () {
-  var game_over = false
+  // Setting up the Game
   var board_query = $('#board')
+  var laby = new Labyrinth(BOARD_HEIGHT, BOARD_WIDTH)
 
-  var player1 = new Player(400, 100, 'p1')
-  var player2 = new Player(400, 500, 'p2')
-
-  var laby = new Labyrinth(BOARD_HEIGHT,  BOARD_WIDTH)
+  var player1 = new Player(400, 300, 'p1')
+  var player2 = new Player(400, 800, 'p2')
   var monster = new MonsterFactory()
 
-  laby.fillScreen()
-
-  play()
+  laby.fillScreen() // Creating the starting landscape of the game
+  play() // launching the game
 
 // ===================
 //    Play function

@@ -54,7 +54,8 @@ Player.prototype._removeBullets = function () {
   // This function will remove the bullets that are out of screen (x < 0)
   var new_bullets = []
   this.bullets.forEach( (bullet, index) => {
-    if (bullet.x > -10) {
+    console.log(bullet.x)
+    if (bullet.x > -100) {
       new_bullets.push(bullet)
     }
     else {
