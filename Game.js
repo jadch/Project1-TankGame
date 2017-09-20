@@ -144,23 +144,6 @@ Labyrinth.prototype.advance = function (dx) {
   this.blocks.forEach( (block) => {
     block.x += dx
   })
-  this._removeBlocks()
-}
-
-// Removing out-of-screen blocks
-Labyrinth.prototype._removeBlocks = function () {
-  var new_blocks = []
-  var board_width = this.board_width + 20 // +20px to avoid glitches
-
-  this.blocks.forEach( (block) => {
-    if (block.x < board_width) {
-      new_blocks.push(block)
-    }
-    else {
-      $(`#block${block.id}`).remove()
-    }
-  })
-  this.blocks = new_blocks
 }
 
 // Building squares
@@ -177,11 +160,13 @@ Labyrinth.prototype.buildSquare = function (start_x, start_y, separation, num) {
 
 Labyrinth.prototype.eternalConstruct = function () {
   // Builds a landscape, 4ever (and ever, and ever)
-    var lastBlock = this.blocks[this.blocks.length - 1]
     var block_width = this.block_width
-    if (lastBlock.x > -50) {
-      var start_y = this.board_width / 2 - block_width / 2
-      this.buildSquare(-150, start_y, 50, 3)
+    var block_array = this.blocks
+
+    for (var i = 0; i < block_array.length; i++) {
+      if (block_array[i]['x'] > BOARD_HEIGHT - 50) {
+        block_array[i]['x'] = - 250
+      }
     }
 }
 
