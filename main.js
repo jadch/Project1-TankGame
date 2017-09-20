@@ -73,6 +73,8 @@ function play () {
 
   monster.createMonsters()
   monster.advance(MONSTER_SPEED)
+  monster.detectShooting(player1.bullets)
+  monster.detectShooting(player2.bullets)
 
   renderGame()
   requestAnimationFrame(play)
@@ -160,3 +162,25 @@ function renderGame () {
   }
 
 })
+
+// ========================
+//    Collision function
+// ========================
+function collisionDetector (A, B) {
+  // this function will detect a collision between two items, A and B.
+  // Expected arguments are objects like the following:
+  // A = {x, y, width, height}
+  // It is assumed that the (x, y) coords represent the top left point of an item, respectively (CSS positioning).
+  var x_axis_overlap = false
+  var y_axis_overlap = false
+
+  if (B.y > A.y && B.y < (A.y + A.width)) { y_axis_overlap = true }
+  if ((B.y + B.width) > A.y && (B.y + B.width) < (A.y + A.width)) { y_axis_overlap = true }
+  if (B.y < A.y && (B.y + B.width) > (A.y + A.width))  y_axis_overlap = true
+
+  if (B.x > A.x && B.x < (A.x + A.height)) { x_axis_overlap = true }
+  if ((B.x + B.height) > A.x && (B.x + B.height) < (A.x + A.height)) { x_axis_overlap = true }
+  if (B.x < A.x && (B.x + B.height) > (A.x + A.wheight))  { x_axis_overlap = true }
+
+  return x_axis_overlap && y_axis_overlap
+  }

@@ -227,3 +227,33 @@ MonsterFactory.prototype._removeMonsters = function () {
   })
   this.monsters = new_monsters
 }
+
+// Method that detects if a monster has been shot :(
+MonsterFactory.prototype.detectShooting = function (bulletArray) {
+  // This function expects an array of bullets as an argument
+  var bullet_width = 1
+  var bullet_height = 35
+  var bullet_array_length = bulletArray.length
+  var monster_array_length = this.monsters.length
+
+  for (var i = 0; i < bullet_array_length; i++) {
+    var bullet = {
+      x: bulletArray[i].x,
+      y: bulletArray[i].y,
+      width: bullet_width,
+      height: bullet_height
+    }
+
+    for (var j = 0; j < monster_array_length; j++) {
+      var monster = {
+        x: this.monsters[j].x,
+        y: this.monsters[j].y,
+        width: 40,
+        height: 40
+      }
+      if (collisionDetector(monster, bullet)) {
+        console.log('THERES BEEN A SHOOTING')
+      }
+    }
+  }
+}
