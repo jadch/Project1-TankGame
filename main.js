@@ -73,8 +73,11 @@ function play () {
 
   monster.createMonsters()
   monster.advance(MONSTER_SPEED)
-  monster.detectShooting(player1.bullets)
-  monster.detectShooting(player2.bullets)
+
+  var new_kills1 = monster.detectShooting(player1.bullets)
+  var new_kills2 = monster.detectShooting(player2.bullets)
+  player1.updateScore(new_kills1)
+  player2.updateScore(new_kills2)
 
   renderGame()
   requestAnimationFrame(play)

@@ -71,6 +71,12 @@ Player.prototype.updateLives = function (default_position) {
   $(`#${this.player_id}Lives`).text(this.lives + ' lives')
 }
 
+// Method to update the player's score
+Player.prototype.updateScore = function (new_kills) {
+  this.score += new_kills
+  $(`#${this.player_id}Score`).text('Score: ' + this.score)
+}
+
 // =====================
 //    Labyrinth class
 // =====================
@@ -235,6 +241,7 @@ MonsterFactory.prototype.detectShooting = function (bulletArray) {
   var bullet_height = 35
   var bullet_array_length = bulletArray.length
   var monster_array_length = this.monsters.length
+  var count_of_monsters_shot = 0
 
   for (var i = 0; i < bullet_array_length; i++) {
     var bullet = {
@@ -254,7 +261,9 @@ MonsterFactory.prototype.detectShooting = function (bulletArray) {
       }
       if (collisionDetector(monster, bullet)) {
         $(`#monster${currentMonster.id}`).remove()
+        count_of_monsters_shot += 1
       }
     }
   }
+  return count_of_monsters_shot // useful to increment the player score
 }
