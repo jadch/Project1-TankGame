@@ -22,7 +22,8 @@ $(document).ready( function () {
   var player2 = new Player(400, 800, 'p2')
   var monster = new MonsterFactory()
 
-  laby.fillScreen() // Creating the starting landscape of the game
+  laby.fillScreen()     // Creating the starting landscape of the game
+  laby.createBorders()  // Creating the starting landscape, border part
   play() // launching the game
 
 // ===================

@@ -5,6 +5,7 @@
 // Global variables defined in the main.js file:
 // ===============================================
 // const BOARD_HEIGHT
+// const BOARD_WIDTH
 
 // ==================
 //    Player class
@@ -183,6 +184,25 @@ Labyrinth.prototype.eternalConstruct = function () {
       var start_y = this.board_width / 2 - block_width / 2
       this.buildSquare(-150, start_y, 50, 3)
     }
+}
+
+// Method to create the board borders
+Labyrinth.prototype.createBorders =  function () {
+  var block_height = this.block_height
+  var num_blocks = BOARD_HEIGHT / block_height - 2 // the -2 accounts for the TopBar
+
+  var x = 0
+
+  for (var i = 0; i < num_blocks; i++) {
+    // left-side border
+    $('#board').append(`<div class="labyrinthBlock BorderBlock" id="borderL${i}"></div>`)
+    $(`#borderL${i}`).css('transform', `translate(0px, ${x}px)`)
+
+    // right-side border
+    $('#board').append(`<div class="labyrinthBlock BorderBlock" id="borderR${i}"></div>`)
+    $(`#borderR${i}`).css('transform', `translate(${BOARD_WIDTH - 55}px, ${x}px)`)
+    x += block_height
+  }
 }
 
 // ===================
