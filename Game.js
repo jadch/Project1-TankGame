@@ -42,20 +42,14 @@ Player.prototype.shoot = function () {
   return bullet_id
 }
 
-// Function that updates the position of the player's bullets
+// Function that updates the position of the player's bullets, and removes out of screen ones
 Player.prototype.bulletAdvance = function (dx = 0, dy = 0) {
-  this.bullets.forEach( (bullet, index) => {
-    this.bullets[index].x -= dx
-    this.bullets[index].y -= - dy
-  })
-  this._removeBullets() // after advancing the bullets we remove the out of screen ones
-}
-
-Player.prototype._removeBullets = function () {
-  // This function will remove the bullets that are out of screen (x < 0)
   var new_bullets = []
+
   this.bullets.forEach( (bullet, index) => {
     if (bullet.x > -100) {
+      bullet.x -= dx
+      bullet.y -= - dy
       new_bullets.push(bullet)
     }
     else {
@@ -160,9 +154,7 @@ Labyrinth.prototype.buildSquare = function (start_x, start_y, separation, num) {
 
 Labyrinth.prototype.eternalConstruct = function () {
   // Builds a landscape, 4ever (and ever, and ever)
-    var block_width = this.block_width
     var block_array = this.blocks
-
     for (var i = 0; i < block_array.length; i++) {
       if (block_array[i]['x'] > BOARD_HEIGHT - 50) {
         block_array[i]['x'] = - 250
