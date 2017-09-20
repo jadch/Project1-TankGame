@@ -51,14 +51,14 @@ function play () {
   if (aPressed && performance.now() - p1_sinceLastShot > 500) {
     let bullet_id = player1.shoot()
     p1_sinceLastShot = performance.now() // avoids the player shooting multiple times immediately
-    board_query.append('<div class="bullet" id="p1bullet' + bullet_id + '"></div>') // adding the bullet to the DOM
+    board_query.append('<div class="bullet1" id="p1bullet' + bullet_id + '"></div>') // adding the bullet to the DOM
   }
 
   // Player 2 shoots
   if (iPressed && performance.now() - p2_sinceLastShot > 500) {
     let bullet_id = player2.shoot()
     p2_sinceLastShot = performance.now()
-    board_query.append('<div class="bullet" id="p2bullet' + bullet_id + '"></div>')
+    board_query.append('<div class="bullet2" id="p2bullet' + bullet_id + '"></div>')
   }
 
   laby.advance(LANDSCAPE_SPEED)

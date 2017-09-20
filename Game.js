@@ -34,8 +34,8 @@ Player.prototype.shoot = function () {
   let bullet_id = this.bulletsFired
 
   this.bullets.push({
-    x: this.position.x,
-    y: this.position.y,
+    x: this.position.x - 15,
+    y: this.position.y + 23,
     id: bullet_id,
     player_id: this.player_id
   })

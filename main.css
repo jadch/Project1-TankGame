@@ -26,13 +26,23 @@
   position: absolute;
 }
 
-.bullet {
+.bullet1 {
   position: absolute;
   background-color: #3b3bdd;
   width: 1px;
   height: 35px;
   border: solid 2px #3b3bdd;
   box-shadow: inset 1px 1px 10px 2px #42b3f4;
+  border-radius: 10px;
+}
+
+.bullet2 {
+  position: absolute;
+  background-color: #c930ba;
+  width: 1px;
+  height: 35px;
+  border: solid 2px #c930ba;
+  box-shadow: inset 1px 1px 10px 2px #f740e5;
   border-radius: 10px;
 }
 
