@@ -1,6 +1,11 @@
 // This file will contain the game logic, namely the definition
 // of classes and user actions, game interactions etc...
 
+// ===============================================
+// Global variables defined in the main.js file:
+// ===============================================
+// const BOARD_HEIGHT
+
 // ==================
 //    Player class
 // ==================
@@ -205,5 +210,20 @@ MonsterFactory.prototype.advance = function (dx) {
   this.monsters.forEach( (monster) => {
     monster.x += dx
   })
-  // ATTN: DONT FORGET TO ADD A REMOVE METHOD IF IT BECOMES NECESSARY
+  this._removeMonsters()
+}
+
+MonsterFactory.prototype._removeMonsters = function () {
+  var new_monsters = []
+  var board_height = BOARD_HEIGHT + 20 // +20px to avoid glitches
+
+  this.monsters.forEach( (monster) => {
+    if (monster.x < board_height) {
+      new_monsters.push(monster)
+    }
+    else {
+      $(`#monster${monster.id}`).remove()
+    }
+  })
+  this.monsters = new_monsters
 }
