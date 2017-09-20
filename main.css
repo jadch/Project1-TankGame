@@ -45,6 +45,33 @@
   box-shadow: inset 0px 0px 10px 0px #8623B8;
 }
 
+.BorderBlock {
+  position: absolute;
+  background: linear-gradient(#33332e, #75756c);
+  width: 50px;
+  height: 50px;
+  background-color: red;
+  animation: 10s borderAnimation infinite;
+}
+
+@keyframes borderAnimation {
+  0% {
+    border: solid 2px #8623B8;
+    box-shadow: inset 0px 0px 10px 0px #8623B8;
+  }
+  30% {
+    border: solid 2px #f442d7;
+    box-shadow: inset 0px 0px 10px 0px #f442d7;
+  }
+  50% {
+    border: solid 2px #d33030;
+    box-shadow: inset 0px 0px 10px 0px #d33030;
+  }
+  100% {
+    border: solid 2px chartreuse;
+    box-shadow: inset 0px 0px 10px 0px chartreuse;
+  }
+}
 
 .monsters {
   width: 40px;

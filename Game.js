@@ -55,7 +55,6 @@ Player.prototype._removeBullets = function () {
   // This function will remove the bullets that are out of screen (x < 0)
   var new_bullets = []
   this.bullets.forEach( (bullet, index) => {
-    console.log(bullet.x)
     if (bullet.x > -100) {
       new_bullets.push(bullet)
     }
@@ -195,11 +194,11 @@ Labyrinth.prototype.createBorders =  function () {
 
   for (var i = 0; i < num_blocks; i++) {
     // left-side border
-    $('#board').append(`<div class="labyrinthBlock BorderBlock" id="borderL${i}"></div>`)
+    $('#board').append(`<div class="BorderBlock" id="borderL${i}"></div>`)
     $(`#borderL${i}`).css('transform', `translate(0px, ${x}px)`)
 
     // right-side border
-    $('#board').append(`<div class="labyrinthBlock BorderBlock" id="borderR${i}"></div>`)
+    $('#board').append(`<div class="BorderBlock" id="borderR${i}"></div>`)
     $(`#borderR${i}`).css('transform', `translate(${BOARD_WIDTH - 55}px, ${x}px)`)
     x += block_height
   }
