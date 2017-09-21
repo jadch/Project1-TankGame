@@ -16,7 +16,7 @@ const BOARD = $('#board')
 function Player (x, y, player_id) {
   this.position = {x: x, y: y}
   this.score = 0
-  this.lives = 3
+  this.lives = 5
   this.player_id = player_id
 
   this.bullets = [] //bullets shot by the player
@@ -64,9 +64,9 @@ Player.prototype.bulletAdvance = function (dx = 0, dy = 0) {
 
 Player.prototype.updateLives = function (default_position) {
   // When a player loses life, this function will update the widget on the Top of the screen, and reset player's position
+  $(`#${this.player_id}heart${this.lives}`).remove()
   this.lives -= 1
   this.position = default_position
-  $(`#${this.player_id}Lives`).text(this.lives + ' lives')
 }
 
 // Method to update the player's score
