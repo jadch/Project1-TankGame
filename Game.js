@@ -194,12 +194,13 @@ MonsterFactory.prototype.createMonsters = function () {
 
   while (this.monsters.length < numberOfMonster) {
     this.monstersAdded += 1
+    var y, src
     var x = - Math.floor(Math.random() * 600 + 100) // -700 < x < -100
-    var y = 0
     var y1 = Math.floor(Math.random() * 400  + 55) // 55 < y1 < 455
     var y2 = Math.floor(Math.random() * 380  + 625) // 625 < y2 < 1005
     var choose_y = Math.random()
     choose_y < 0.5 ? y = y1 : y = y2
+    choose_y < 0.15 ? src ="src/poo.png" : src = "src/alien.png"
 
     var monster = {
       x: x,
@@ -209,7 +210,7 @@ MonsterFactory.prototype.createMonsters = function () {
     this.monsters.push(monster)
 
     // Jquery part
-    $('#board').append(`<img class="monsters" id="monster${this.monstersAdded}" src="src/alien.png">`)
+    $('#board').append(`<img class="monsters" id="monster${this.monstersAdded}" src=${src}>`)
   }
 }
 
