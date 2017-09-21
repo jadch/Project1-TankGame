@@ -7,6 +7,9 @@
 // const BOARD_HEIGHT
 // const BOARD_WIDTH
 
+// Global board selector
+const BOARD = $('#board')
+
 // ==================
 //    Player class
 // ==================
@@ -89,7 +92,7 @@ Labyrinth.prototype.buildBlock = function (x, y) {
   this.blocksAdded += 1
 
   // Jquery part
-  $('#board').append(`<div class="labyrinthBlock" id="block${this.blocksAdded}"></div>`)
+  BOARD.append(`<div class="labyrinthBlock" id="block${this.blocksAdded}"></div>`)
   var selector = $(`#block${this.blocksAdded}`)
 
   // Game logic part
@@ -174,11 +177,11 @@ Labyrinth.prototype.createBorders =  function () {
 
   for (var i = 0; i < num_blocks; i++) {
     // left-side border
-    $('#board').append(`<div class="BorderBlock" id="borderL${i}"></div>`)
+    BOARD.append(`<div class="BorderBlock" id="borderL${i}"></div>`)
     $(`#borderL${i}`).css('transform', `translate(0px, ${x}px)`)
 
     // right-side border
-    $('#board').append(`<div class="BorderBlock" id="borderR${i}"></div>`)
+    BOARD.append(`<div class="BorderBlock" id="borderR${i}"></div>`)
     $(`#borderR${i}`).css('transform', `translate(${BOARD_WIDTH - 55}px, ${x}px)`)
     x += block_height
   }
@@ -205,15 +208,18 @@ MonsterFactory.prototype.createMonsters = function () {
     choose_y < 0.5 ? y = y1 : y = y2
     choose_y < 0.15 ? src ="src/poo.png" : src = "src/alien.png"
 
+    // Jquery part
+    BOARD.append(`<img class="monsters" id="monster${this.monstersAdded}" src=${src}>`)
+    var selector = $(`#monster${this.monstersAdded}`)
+
     var monster = {
       x: x,
       y: y,
-      id: this.monstersAdded
+      id: this.monstersAdded,
+      selector: selector
     }
     this.monsters.push(monster)
 
-    // Jquery part
-    $('#board').append(`<img class="monsters" id="monster${this.monstersAdded}" src=${src}>`)
   }
 }
 
@@ -234,7 +240,7 @@ MonsterFactory.prototype._removeMonsters = function () {
       new_monsters.push(monster)
     }
     else {
-      $(`#monster${monster.id}`).remove()
+      monster.selector.remove()
     }
   })
   this.monsters = new_monsters
@@ -262,11 +268,12 @@ MonsterFactory.prototype.detectShooting = function (bulletArray) {
       var monster = {
         x: currentMonster.x,
         y: currentMonster.y,
+        selector: currentMonster.selector,
         width: 40,
         height: 40
       }
       if (collisionDetector(monster, bullet)) {
-        $(`#monster${currentMonster.id}`).remove()
+        monster.selector.remove()
         count_of_monsters_shot += 1
       }
     }

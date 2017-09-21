@@ -116,7 +116,7 @@ function renderGame () {
 
   // Rendering the monsters
   monster.monsters.forEach( (monster) => {
-    $(`#monster${monster.id}`).css('transform', `translate(${monster.y}px, ${monster.x}px)`)
+    monster.selector.css('transform', `translate(${monster.y}px, ${monster.x}px)`)
   })
 }
 
