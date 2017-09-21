@@ -225,18 +225,12 @@ MonsterFactory.prototype.createMonsters = function () {
 
 // Advance method, to move monsters forward
 MonsterFactory.prototype.advance = function (dx) {
-  this.monsters.forEach( (monster) => {
-    monster.x += dx
-  })
-  this._removeMonsters()
-}
-
-MonsterFactory.prototype._removeMonsters = function () {
   var new_monsters = []
   var board_height = BOARD_HEIGHT + 20 // +20px to avoid glitches
-
   this.monsters.forEach( (monster) => {
-    if (monster.x < board_height) {
+    monster.x += dx
+
+    if (monster.x < board_height) { // Checking if we're out of screen
       new_monsters.push(monster)
     }
     else {
@@ -244,7 +238,8 @@ MonsterFactory.prototype._removeMonsters = function () {
     }
   })
   this.monsters = new_monsters
-}
+  }
+
 
 // Method that detects if a monster has been shot :(
 MonsterFactory.prototype.detectShooting = function (bulletArray) {
