@@ -74,10 +74,19 @@ function play () {
   monster.createMonsters()
   monster.advance(MONSTER_SPEED)
 
+  // Detecting when a player kills a monster
   var new_kills1 = monster.detectShooting(player1.bullets)
   var new_kills2 = monster.detectShooting(player2.bullets)
   player1.updateScore(new_kills1)
   player2.updateScore(new_kills2)
+
+  // Detecting when a player and a monster collide
+  if (monsterPlayerCollision(player1, monster.monsters)) {
+    player1.updateLives(DEFAULT_POSITION_P1)
+  }
+  if (monsterPlayerCollision(player2, monster.monsters)) {
+    player2.updateLives(DEFAULT_POSITION_P2)
+  }
 
   renderGame()
   requestAnimationFrame(play)
@@ -187,3 +196,33 @@ function collisionDetector (A, B) {
 
   return x_axis_overlap && y_axis_overlap
   }
+
+  // ================================
+  //    Monster - Player collision
+  // ================================
+  function monsterPlayerCollision (player, monstersArray) {
+
+    for (var i = 0; i < monstersArray.length; i++) {
+      var player_obj = {
+        x: player.position.x,
+        y: player.position.y,
+        player_id: player.player_id,
+        width: 50,
+        height: 50
+      }
+
+      var currentMonster = monstersArray[i]
+      var monster = {
+        x: currentMonster.x,
+        y: currentMonster.y,
+        selector: currentMonster.selector,
+        width: 40,
+        height: 40
+      }
+
+      if (collisionDetector(player_obj, monster)) {
+        monster.selector.remove()
+        return true
+      }
+  }
+}
