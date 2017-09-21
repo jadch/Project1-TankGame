@@ -30,7 +30,7 @@ $(document).ready( function () {
   setTimeout( () => {
     $('#startScreen').remove()
     play()
-  }, 5000)
+  }, 2000)
 
 // ===================
 //    Play function

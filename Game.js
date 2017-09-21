@@ -268,6 +268,7 @@ MonsterFactory.prototype.detectShooting = function (bulletArray) {
         height: 40
       }
       if (collisionDetector(monster, bullet)) {
+        currentMonster.x = 2000 // A hack to put the monster out of screen and get it deleted from the array
         monster.selector.remove()
         count_of_monsters_shot += 1
       }
