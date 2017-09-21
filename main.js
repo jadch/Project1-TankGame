@@ -5,7 +5,7 @@ const TANK_SPEED_Y = 4
 
 const BULLET_SPEED_X = 22
 const BULLET_SPEED_Y = 0
-const LANDSCAPE_SPEED = 7
+const LANDSCAPE_SPEED = 4
 const MONSTER_SPEED = 3.5
 
 const BOARD_WIDTH = 1100
@@ -27,10 +27,28 @@ $(document).ready( function () {
   laby.createBorders()  // Creating the starting landscape, border part
 
   // Start screen fading
-  setTimeout( () => {
-    $('#startScreen').remove()
-    play()
-  }, 2000)
+  init()
+  function init () {
+
+    setTimeout( () => {
+      $('#startScreen').remove()
+      window.cancelAnimationFrame(animationFrameID)
+      play()
+    }, 5000)
+
+    var animationFrameID = requestAnimationFrame(start_rendering_laby)
+
+    function start_rendering_laby () {
+      laby.advance(LANDSCAPE_SPEED)
+      laby.eternalConstruct()
+
+      // Rendering the labyrinth blocks
+      laby.blocks.forEach( (block) => {
+        block.selector.css('transform', `translate(${block.y}px, ${block.x}px)`)
+      })
+      requestAnimationFrame(start_rendering_laby)
+    }
+  }
 
 // ===================
 //    Play function
