@@ -25,7 +25,12 @@ $(document).ready( function () {
 
   laby.fillScreen()     // Creating the starting landscape of the game
   laby.createBorders()  // Creating the starting landscape, border part
-  play() // launching the game
+
+  // Start screen fading
+  setTimeout( () => {
+    $('#startScreen').remove()
+    play()
+  }, 5000)
 
 // ===================
 //    Play function
