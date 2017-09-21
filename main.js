@@ -100,7 +100,8 @@ function play () {
 
     setTimeout( () => {
       P1_cont.html("<img id='P1' src='src/Hugging_Face.png'>")
-    }, 4000)
+      $('#P1announcement h1').text('')
+    }, 3000)
   }
 
   if (player2.position.x > BOARD_HEIGHT - 75) {
@@ -110,8 +111,8 @@ function play () {
 
     setTimeout( () => {
       P2_cont.html("<img id='P2' src='src/Hugging_Face.png'>")
-      $('#P2announcement h1').text()
-    }, 4000)
+      $('#P2announcement h1').text('')
+    }, 3000)
   }
 
   monster.createMonsters()
