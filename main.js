@@ -1,11 +1,12 @@
 // *** This file will handle the game flow and user interactions ***
 
-const TANK_SPEED_X = 3
-const TANK_SPEED_Y = 2
-const BULLET_SPEED_X = 8
+const TANK_SPEED_X = 8
+const TANK_SPEED_Y = 4
+
+const BULLET_SPEED_X = 22
 const BULLET_SPEED_Y = 0
-const LANDSCAPE_SPEED = 3
-const MONSTER_SPEED = 1
+const LANDSCAPE_SPEED = 7
+const MONSTER_SPEED = 3.5
 
 const BOARD_WIDTH = 1100
 const BOARD_HEIGHT = 700
@@ -33,18 +34,18 @@ function play () {
   // This function will handle the whole game logic, executing at each requestAnimationFrame
 
   // Player 1 moves
-  if (zPressed) player1.advance(TANK_SPEED_X, 0)
+  if (zPressed) player1.advance(TANK_SPEED_X - LANDSCAPE_SPEED, 0)
   if (qPressed && player1.position.y > 55) player1.advance(0, TANK_SPEED_Y)
   if (dPressed && player1.position.y < BOARD_WIDTH - 105) player1.advance(0, -TANK_SPEED_Y)
 
   // Player 2 moves
-  if (oPressed) player2.advance(TANK_SPEED_X, 0)
+  if (oPressed) player2.advance(TANK_SPEED_X - LANDSCAPE_SPEED, 0)
   if (kPressed && player2.position.y > 55) player2.advance(0, TANK_SPEED_Y)
   if (mPressed && player2.position.y < BOARD_WIDTH - 105) player2.advance(0, -TANK_SPEED_Y)
 
   // If no forward movement, the tanks go back at Landscape speed
-  if (!zPressed) player1.advance(-LANDSCAPE_SPEED, 0)
-  if (!oPressed) player2.advance(-LANDSCAPE_SPEED, 0)
+  if (!zPressed) player1.advance(-LANDSCAPE_SPEED * 2 / 3, 0)
+  if (!oPressed) player2.advance(-LANDSCAPE_SPEED * 2 / 3, 0)
 
 
   // Player 1 shoots
@@ -110,7 +111,7 @@ function renderGame () {
 
   // Rendering the labyrinth blocks
   laby.blocks.forEach( (block) => {
-    $(`#block${block.id}`).css('transform', `translate(${block.y}px, ${block.x}px)`)
+    block.selector.css('transform', `translate(${block.y}px, ${block.x}px)`)
   })
 
   // Rendering the monsters

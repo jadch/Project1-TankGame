@@ -86,18 +86,21 @@ function Labyrinth (board_height, board_width) {
 }
 
 Labyrinth.prototype.buildBlock = function (x, y) {
-  // Game logic part
   this.blocksAdded += 1
+
+  // Jquery part
+  $('#board').append(`<div class="labyrinthBlock" id="block${this.blocksAdded}"></div>`)
+  var selector = $(`#block${this.blocksAdded}`)
+
+  // Game logic part
   this.blocks.push({
     x: x,
     y: y,
     width: this.block_width,
     height: this.block_height,
-    id: this.blocksAdded
+    id: this.blocksAdded,
+    selector: selector
   })
-
-  // Jquery part
-  $('#board').append(`<div class="labyrinthBlock" id="block${this.blocksAdded}"></div>`)
 }
 
 Labyrinth.prototype.buildLine = function (x, y, num) {
@@ -190,12 +193,12 @@ function MonsterFactory () {
 }
 
 MonsterFactory.prototype.createMonsters = function () {
-  var numberOfMonster = 10
+  var numberOfMonster = 6
 
   while (this.monsters.length < numberOfMonster) {
     this.monstersAdded += 1
     var y, src
-    var x = - Math.floor(Math.random() * 600 + 100) // -700 < x < -100
+    var x = - Math.floor(Math.random() * 900 + 100) // -1000 < x < -100
     var y1 = Math.floor(Math.random() * 400  + 55) // 55 < y1 < 455
     var y2 = Math.floor(Math.random() * 380  + 625) // 625 < y2 < 1005
     var choose_y = Math.random()
