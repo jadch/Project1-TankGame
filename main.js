@@ -235,7 +235,9 @@ function collisionDetector (A, B) {
 function endGame (player1, player2) {
   $('#board').remove()
   $('body').css('background', 'linear-gradient(to bottom, rgba(76,76,76,1) 0%,rgba(89,89,89,1) 12%,rgba(102,102,102,1) 21%,rgb(111, 106, 106) 39%,rgb(113, 109, 109) 50%,rgb(105, 103, 103) 76%,rgb(80, 77, 77) 91%,rgb(76, 74, 74) 99%,rgb(76, 76, 76) 100%)')
-  var num = '1'
+
+  if (player1.lives < 0) { var num = '2' }
+  if (player2.lives < 0) { var num = '1' }
 
   $('#endScreen').append(`
     <img src="src/player${num}wins.jpg">
