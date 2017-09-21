@@ -68,8 +68,8 @@ function play () {
   player2.bulletAdvance(BULLET_SPEED_X, BULLET_SPEED_Y)
 
   // Checking if one of the players is out of screen
-  if (player1.position.x > BOARD_HEIGHT) player1.updateLives(DEFAULT_POSITION_P1)
-  if (player2.position.x > BOARD_HEIGHT) player2.updateLives(DEFAULT_POSITION_P2)
+  if (player1.position.x > BOARD_HEIGHT - 75) player1.updateLives(DEFAULT_POSITION_P1)
+  if (player2.position.x > BOARD_HEIGHT - 75) player2.updateLives(DEFAULT_POSITION_P2)
 
   monster.createMonsters()
   monster.advance(MONSTER_SPEED)
