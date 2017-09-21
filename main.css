@@ -161,3 +161,20 @@ body {
   margin-top: 50px;
   width: 800px;
 }
+
+#P1announcement {
+  position: absolute;
+  transform: translate(300, 200);
+}
+
+#P2announcement {
+  position: absolute;
+  transform: translate(800, 200);
+  height: 50px;
+}
+
+#P1announcement h1, #P2announcement h1 {
+  font-family: Helvetica;
+  font-size: 3em;
+  color: #eff1f4;
+}
