@@ -100,8 +100,8 @@ function play () {
   // Detecting when a player kills a monster
   var new_kills1 = monster.detectShooting(player1.bullets)
   var new_kills2 = monster.detectShooting(player2.bullets)
-  player1.updateScore(new_kills1)
-  player2.updateScore(new_kills2)
+  if (new_kills1) player1.updateScore(new_kills1)
+  if (new_kills2) player2.updateScore(new_kills2)
 
   // Detecting when a player and a monster collide
   if (monsterPlayerCollision(player1, monster.monsters)) {
