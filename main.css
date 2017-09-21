@@ -125,3 +125,17 @@ body {
   height: 40px;
   position: absolute;
 }
+
+#endScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #e8e8e8;
+  font-family: Helvetica;
+}
+
+#endScreen img {
+  margin-top: 50px;
+  width: 800px;
+}
