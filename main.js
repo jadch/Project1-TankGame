@@ -3,7 +3,7 @@
 const TANK_SPEED_X = 8
 const TANK_SPEED_Y = 4
 
-const BULLET_SPEED_X = 22
+const BULLET_SPEED_X = 25
 const BULLET_SPEED_Y = 0
 const LANDSCAPE_SPEED = 4
 const MONSTER_SPEED = 3.5
@@ -74,14 +74,14 @@ function play () {
 
 
   // Player 1 shoots
-  if (aPressed && performance.now() - p1_sinceLastShot > 500) {
+  if (aPressed && performance.now() - p1_sinceLastShot > 300) {
     let bullet_id = player1.shoot()
     p1_sinceLastShot = performance.now() // avoids the player shooting multiple times immediately
     board_query.append('<div class="bullet1" id="p1bullet' + bullet_id + '"></div>') // adding the bullet to the DOM
   }
 
   // Player 2 shoots
-  if (iPressed && performance.now() - p2_sinceLastShot > 500) {
+  if (iPressed && performance.now() - p2_sinceLastShot > 300) {
     let bullet_id = player2.shoot()
     p2_sinceLastShot = performance.now()
     board_query.append('<div class="bullet2" id="p2bullet' + bullet_id + '"></div>')
