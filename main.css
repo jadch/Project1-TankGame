@@ -181,7 +181,7 @@ body {
 
 #testy {
   position: absolute;
-  transform: translate(200, 200);
+  transform: translate(-500px, -500px);
 }
 
 #finishHim {
