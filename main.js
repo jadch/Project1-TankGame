@@ -275,12 +275,71 @@ function collisionDetector (A, B) {
 
 function endGame (player1, player2) {
   $('#board').remove()
-  $('body').css('background', 'linear-gradient(to bottom, rgba(76,76,76,1) 0%,rgba(89,89,89,1) 12%,rgba(102,102,102,1) 21%,rgb(111, 106, 106) 39%,rgb(113, 109, 109) 50%,rgb(105, 103, 103) 76%,rgb(80, 77, 77) 91%,rgb(76, 74, 74) 99%,rgb(76, 76, 76) 100%)')
+  $('#P1announcement').remove()
+  $('#P2announcement').remove()
+  $('#board').css('background, black')
+  $('#finishHim').css('display', 'block')
 
-  if (player1.lives < 1) { var num = '2' }
-  if (player2.lives < 1) { var num = '1' }
+  if (player1.lives < 1) {
+    var y = 480
+    var num = '2'
+    $('#finishHim').append(`
+      <div>
+        <img id='looser' src='src/lost1.png'>
+        <img id='winner' src='src/tongueOut.png'>
+        <img id='rocket' src='src/rocket.svg'>
+      </div>
+      `)
+    $('#looser').css('transform', 'translate(700px, 30px)')
+    $('#winner').css('transform', 'translate(700px, 500px)')
+    $('#rocket').css(`transform', 'translate(700px, ${y}px)`)
 
-  $('#endScreen').append(`
-    <img src="src/player${num}wins.jpg">
-  `)
+    requestAnimationFrame(rocketKill)
+    function  rocketKill () {
+        y -= 4
+        $('#rocket').css('transform', `translate(702px, ${y}px)`)
+        if (y > 30) {
+          requestAnimationFrame(rocketKill)
+        }
+        else {
+          $('#finishHim').remove()
+          $('body').css('background', 'linear-gradient(to bottom, rgba(76,76,76,1) 0%,rgba(89,89,89,1) 12%,rgba(102,102,102,1) 21%,rgb(111, 106, 106) 39%,rgb(113, 109, 109) 50%,rgb(105, 103, 103) 76%,rgb(80, 77, 77) 91%,rgb(76, 74, 74) 99%,rgb(76, 76, 76) 100%)')
+          $('#endScreen').append(`
+            <img src="src/player${num}wins.jpg">
+            `)
+        }
+    }
+    return undefined
+  }
+  if (player2.lives < 1) {
+    var y = 480
+    var num = '1'
+    $('#finishHim').append(`
+      <div>
+        <img id='looser' src='src/lost1.png'>
+        <img id='winner' src='src/Hugging_Face.png'>
+        <img id='rocket' src='src/rocket.svg'>
+      </div>
+      `)
+    $('#looser').css('transform', 'translate(700px, 30px)')
+    $('#winner').css('transform', 'translate(700px, 500px)')
+    $('#rocket').css(`transform', 'translate(700px, ${y}px)`)
+
+    requestAnimationFrame(rocketKill)
+    function  rocketKill () {
+        y -= 4
+        $('#rocket').css('transform', `translate(702px, ${y}px)`)
+        if (y > 30) {
+          requestAnimationFrame(rocketKill)
+        }
+        else {
+          $('#finishHim').remove()
+          $('body').css('background', 'linear-gradient(to bottom, rgba(76,76,76,1) 0%,rgba(89,89,89,1) 12%,rgba(102,102,102,1) 21%,rgb(111, 106, 106) 39%,rgb(113, 109, 109) 50%,rgb(105, 103, 103) 76%,rgb(80, 77, 77) 91%,rgb(76, 74, 74) 99%,rgb(76, 76, 76) 100%)')
+          $('#endScreen').append(`
+            <img src="src/player${num}wins.jpg">
+            `)
+        }
+    }
+    return undefined
+  }
 }
