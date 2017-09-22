@@ -117,6 +117,7 @@ function play () {
 
   monster.createMonsters()
   monster.advance(MONSTER_SPEED)
+  monster.increaseDifficulty(performance.now())
 
   // Detecting when a player kills a monster
   var new_kills1 = monster.detectShooting(player1.bullets)

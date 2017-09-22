@@ -193,10 +193,12 @@ Labyrinth.prototype.createBorders =  function () {
 function MonsterFactory () {
   this.monsters = []
   this.monstersAdded = 0
+  this.numberOfMonster = 10
+  this.timeElapsed = 0
 }
 
 MonsterFactory.prototype.createMonsters = function () {
-  var numberOfMonster = 6
+  var numberOfMonster = this.numberOfMonster
 
   while (this.monsters.length < numberOfMonster) {
     this.monstersAdded += 1
@@ -220,6 +222,14 @@ MonsterFactory.prototype.createMonsters = function () {
     }
     this.monsters.push(monster)
 
+  }
+}
+
+// Method to increase difficulty after a certain elapsed time
+MonsterFactory.prototype.increaseDifficulty = function (now) {
+  if (now > 6000) {
+    this.numberOfMonster += (now - this.timeElapsed) / 10000
+    this.timeElapsed = now
   }
 }
 
