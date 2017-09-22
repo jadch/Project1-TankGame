@@ -61,11 +61,11 @@ function play () {
   // Player 1 moves
   if (zPressed) player1.advance(TANK_SPEED_X - LANDSCAPE_SPEED, 0)
   if (qPressed && player1.position.y > 55) player1.advance(0, TANK_SPEED_Y)
-  if (dPressed && player1.position.y < BOARD_WIDTH - 105) player1.advance(0, -TANK_SPEED_Y)
+  if (dPressed && player1.position.y < 470) player1.advance(0, -TANK_SPEED_Y)
 
   // Player 2 moves
   if (oPressed) player2.advance(TANK_SPEED_X - LANDSCAPE_SPEED, 0)
-  if (kPressed && player2.position.y > 55) player2.advance(0, TANK_SPEED_Y)
+  if (kPressed && player2.position.y > 630) player2.advance(0, TANK_SPEED_Y)
   if (mPressed && player2.position.y < BOARD_WIDTH - 105) player2.advance(0, -TANK_SPEED_Y)
 
   // If no forward movement, the tanks go back at Landscape speed
