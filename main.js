@@ -74,14 +74,14 @@ function play () {
 
 
   // Player 1 shoots
-  if (aPressed && performance.now() - p1_sinceLastShot > 300) {
+  if (aPressed && performance.now() - p1_sinceLastShot > 275) {
     let bullet_id = player1.shoot()
     p1_sinceLastShot = performance.now() // avoids the player shooting multiple times immediately
     board_query.append('<div class="bullet1" id="p1bullet' + bullet_id + '"></div>') // adding the bullet to the DOM
   }
 
   // Player 2 shoots
-  if (iPressed && performance.now() - p2_sinceLastShot > 300) {
+  if (iPressed && performance.now() - p2_sinceLastShot > 275) {
     let bullet_id = player2.shoot()
     p2_sinceLastShot = performance.now()
     board_query.append('<div class="bullet2" id="p2bullet' + bullet_id + '"></div>')
@@ -277,6 +277,7 @@ function endGame (player1, player2) {
   $('#board').remove()
   $('#P1announcement').remove()
   $('#P2announcement').remove()
+  $('#testy').remove()
   $('#board').css('background, black')
   $('#finishHim').css('display', 'block')
 
@@ -285,6 +286,9 @@ function endGame (player1, player2) {
     var num = '2'
     $('#finishHim').append(`
       <div>
+        <iframe id="ytplayer" type="text/html" width="720" height="405"
+        src="https://www.youtube.com/embed/_hHDxlm66dE?autoplay=1"
+        frameborder="0" allowfullscreen></iframe>
         <img id='looser' src='src/lost1.png'>
         <img id='winner' src='src/tongueOut.png'>
         <img id='rocket' src='src/rocket.svg'>
@@ -316,6 +320,9 @@ function endGame (player1, player2) {
     var num = '1'
     $('#finishHim').append(`
       <div>
+        <iframe id="ytplayer" type="text/html" width="720" height="405"
+  src="https://www.youtube.com/embed/_hHDxlm66dE?autoplay=1"
+  frameborder="0" allowfullscreen></iframe>
         <img id='looser' src='src/lost1.png'>
         <img id='winner' src='src/Hugging_Face.png'>
         <img id='rocket' src='src/rocket.svg'>

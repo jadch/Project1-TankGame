@@ -179,7 +179,7 @@ body {
   color: #eff1f4;
 }
 
-#testy {
+#testy, #ytplayer {
   position: absolute;
   transform: translate(-500px, -500px);
 }
