@@ -23,7 +23,7 @@ $(document).ready( function () {
       $('#startScreen').show()
       $('#board').show()
 
-      // onePlayerMode()
+      onePlayerMode()
     })
     
     $('#twoPlayers').click( () => {
@@ -360,6 +360,146 @@ function twoPlayerMode() {
   }
 }
 
-function onePlayerMode () {
 
+// =========================
+//      One Player Mode
+// =========================
+
+function onePlayerMode () {
+  // Setting up the Game
+  // Only one player, no labyrinth
+  // Controls: J (left) I (up) & L (right), D to shoot
+  
+  var board_query = $('#board');
+  var laby = new Labyrinth(BOARD_HEIGHT, BOARD_WIDTH);
+  var player = new Player(BOARD_WIDTH/2, 300, 'p1');
+  var monster = new MonsterFactory();
+  laby.createBorders(); // Creating the starting landscape, border part
+
+  // Removing two-player mode elements
+  $('#P2container').remove()
+  $('#p2Lives').parent().remove()
+	
+  // Start screen fading
+  init();
+  function init() {
+     setTimeout(() => {
+        $('#startScreen').remove();
+        play();
+    }, 5000);
+  }
+
+  // ===================
+  //    Play function
+  // ===================
+  function play() {
+      // This function will handle the whole game logic, executing at each requestAnimationFrame
+      var P1_cont = $('#P1container');
+			
+      // Player 1 moves
+      if (iPressed)
+          player.advance(TANK_SPEED_X - LANDSCAPE_SPEED, 0);
+      if (jPressed && player.position.y > 55)
+          player.advance(0, TANK_SPEED_Y);
+      if (lPressed && player.position.y < BOARD_WIDTH - 105)
+          player.advance(0, -TANK_SPEED_Y);
+
+      // If no forward movement, the tanks go back at Landscape speed
+      if (!iPressed)
+          player.advance(-LANDSCAPE_SPEED * 2 / 3, 0);
+
+      // Player shoots
+      if (dPressed && performance.now() - p1_sinceLastShot > 275) {
+          let bullet_id = player.shoot();
+          p1_sinceLastShot = performance.now(); // avoids the player shooting multiple times immediately
+          board_query.append('<div class="bullet1" id="p1bullet' + bullet_id + '"></div>'); // adding the bullet to the DOM
+      }
+
+      player.bulletAdvance(BULLET_SPEED_X, BULLET_SPEED_Y);
+
+      // Checking if one the players is out of screen
+      if (player.position.x > BOARD_HEIGHT - 75) {
+          player.updateLives(DEFAULT_POSITION_P1);
+          P1_cont.html("<img id='P1' src='src/snail.svg'>");
+          $('#P1announcement h1').text("FASTER! SNAIL MODE");
+          setTimeout(() => {
+              P1_cont.html("<img id='P1' src='src/Hugging_Face.png'>");
+              $('#P1announcement h1').text('');
+          }, 3000);
+      }
+
+      monster.createMonsters();
+      monster.advance(MONSTER_SPEED);
+      monster.increaseDifficulty(performance.now());
+      
+      // Detecting when the player kills a monster
+      var new_kills = monster.detectShooting(player.bullets);
+      if (new_kills) player.updateScore(new_kills);
+
+      // Detecting when the player and a monster collide
+      if (monsterPlayerCollision(player, monster.monsters)) {
+          player.updateLives(DEFAULT_POSITION_P1);
+      }
+      
+      renderGame();
+      if (player.lives > 0 ) {
+          requestAnimationFrame(play)
+        }
+      else {
+          endGame(player, player2)
+        }
+  }
+  // ========================
+  //    Rendering function
+  // ========================
+  function renderGame() {
+      var P1_query = $('#P1');
+      // Rendering player 1
+      P1_query.css('transform', `translate(${player.position.y}px, ${player.position.x}px) `);
+     
+      // Rendering the bullets of Player 1
+      player.bullets.forEach((bullet) => {
+          $(`#p1bullet${bullet.id}`).css('transform', `translate(${bullet.y}px, ${bullet.x}px) `);
+      });
+      // Rendering the labyrinth blocks
+      laby.blocks.forEach((block) => {
+          block.selector.css('transform', `translate(${block.y}px, ${block.x}px) `);
+      });
+      // Rendering the monsters
+      monster.monsters.forEach((monster) => {
+          monster.selector.css('transform', `translate(${monster.y}px, ${monster.x}px) `);
+      });
+  }
+  // ==============================
+  //    Event listener functions
+  // ==============================
+  document.addEventListener('keydown', KeyDownFunc, false);
+  document.addEventListener('keyup', KeyUpFunc, false);
+  // Player controls: JIL for movement, D for fire
+  var dPressed = false;
+  var jPressed = false;
+  var iPressed = false;
+  var lPressed = false;
+  var p1_sinceLastShot = performance.now();
+
+  function KeyDownFunc(event) {
+      if (event.keyCode === 68)
+          dPressed = true;
+      if (event.keyCode === 74)
+          jPressed = true;
+      if (event.keyCode === 73)
+          iPressed = true;
+      if (event.keyCode === 76)
+          lPressed = true;
+  }
+  function KeyUpFunc(event) {
+      if (event.keyCode === 68)
+          dPressed = false;
+      if (event.keyCode === 74)
+          jPressed = false;
+      if (event.keyCode === 73)
+          iPressed = false;
+      if (event.keyCode === 76)
+          lPressed = false;
+  }
 }
