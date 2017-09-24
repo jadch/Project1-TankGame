@@ -15,8 +15,24 @@ const DEFAULT_POSITION_P1 = { x: 400, y: 300 } // Default starting positions
 const DEFAULT_POSITION_P2 = { x: 400, y: 800 }
 
 $(document).ready( function () {
-    // onePlayerMode()
-    twoPlayerMode()
+    $('#startScreen').hide()
+    $('#board').hide()
+
+    $('#singlePlayer').click( () => {
+      $('#landing').remove()
+      $('#startScreen').show()
+      $('#board').show()
+
+      // onePlayerMode()
+    })
+    
+    $('#twoPlayers').click( () => {
+      $('#landing').remove()
+      $('#startScreen').show()
+      $('#board').show()
+      
+      twoPlayerMode()
+    })
 })
 
 // ========================
