@@ -15,209 +15,8 @@ const DEFAULT_POSITION_P1 = { x: 400, y: 300 } // Default starting positions
 const DEFAULT_POSITION_P2 = { x: 400, y: 800 }
 
 $(document).ready( function () {
-  // Setting up the Game
-  var board_query = $('#board')
-  var laby = new Labyrinth(BOARD_HEIGHT, BOARD_WIDTH)
-
-  var player1 = new Player(400, 300, 'p1')
-  var player2 = new Player(400, 800, 'p2')
-  var monster = new MonsterFactory()
-
-  laby.fillScreen()     // Creating the starting landscape of the game
-  laby.createBorders()  // Creating the starting landscape, border part
-
-  // Start screen fading
-  init()
-  function init () {
-
-    setTimeout( () => {
-      $('#startScreen').remove()
-      window.cancelAnimationFrame(animationFrameID)
-      play()
-    }, 5000)
-
-    var animationFrameID = requestAnimationFrame(start_rendering_laby)
-
-    function start_rendering_laby () {
-      laby.advance(LANDSCAPE_SPEED)
-      laby.eternalConstruct()
-
-      // Rendering the labyrinth blocks
-      laby.blocks.forEach( (block) => {
-        block.selector.css('transform', `translate(${block.y}px, ${block.x}px)`)
-      })
-      requestAnimationFrame(start_rendering_laby)
-    }
-  }
-
-// ===================
-//    Play function
-// ===================
-function play () {
-  // This function will handle the whole game logic, executing at each requestAnimationFrame
-  var P1_cont = $('#P1container')
-  var P2_cont = $('#P2container')
-
-  // Player 1 moves
-  if (zPressed) player1.advance(TANK_SPEED_X - LANDSCAPE_SPEED, 0)
-  if (qPressed && player1.position.y > 55) player1.advance(0, TANK_SPEED_Y)
-  if (dPressed && player1.position.y < 470) player1.advance(0, -TANK_SPEED_Y)
-
-  // Player 2 moves
-  if (oPressed) player2.advance(TANK_SPEED_X - LANDSCAPE_SPEED, 0)
-  if (kPressed && player2.position.y > 630) player2.advance(0, TANK_SPEED_Y)
-  if (mPressed && player2.position.y < BOARD_WIDTH - 105) player2.advance(0, -TANK_SPEED_Y)
-
-  // If no forward movement, the tanks go back at Landscape speed
-  if (!zPressed) player1.advance(-LANDSCAPE_SPEED * 2 / 3, 0)
-  if (!oPressed) player2.advance(-LANDSCAPE_SPEED * 2 / 3, 0)
-
-
-  // Player 1 shoots
-  if (aPressed && performance.now() - p1_sinceLastShot > 275) {
-    let bullet_id = player1.shoot()
-    p1_sinceLastShot = performance.now() // avoids the player shooting multiple times immediately
-    board_query.append('<div class="bullet1" id="p1bullet' + bullet_id + '"></div>') // adding the bullet to the DOM
-  }
-
-  // Player 2 shoots
-  if (iPressed && performance.now() - p2_sinceLastShot > 275) {
-    let bullet_id = player2.shoot()
-    p2_sinceLastShot = performance.now()
-    board_query.append('<div class="bullet2" id="p2bullet' + bullet_id + '"></div>')
-  }
-
-  laby.advance(LANDSCAPE_SPEED)
-  laby.eternalConstruct()
-  player1.bulletAdvance(BULLET_SPEED_X, BULLET_SPEED_Y)
-  player2.bulletAdvance(BULLET_SPEED_X, BULLET_SPEED_Y)
-
-  // Checking if one of the players is out of screen
-  if (player1.position.x > BOARD_HEIGHT - 75) {
-    player1.updateLives(DEFAULT_POSITION_P1)
-    P1_cont.html("<img id='P1' src='src/snail.svg'>")
-    $('#P1announcement h1').text("FASTER! SNAIL MODE")
-
-    setTimeout( () => {
-      P1_cont.html("<img id='P1' src='src/Hugging_Face.png'>")
-      $('#P1announcement h1').text('')
-    }, 3000)
-  }
-
-  if (player2.position.x > BOARD_HEIGHT - 75) {
-    player2.updateLives(DEFAULT_POSITION_P2)
-    P2_cont.html("<img id='P2' src='src/snail.svg'>")
-    $('#P2announcement h1').text("FASTER! SNAIL MODE")
-
-    setTimeout( () => {
-      P2_cont.html("<img id='P2' src='src/Hugging_Face.png'>")
-      $('#P2announcement h1').text('')
-    }, 3000)
-  }
-
-  monster.createMonsters()
-  monster.advance(MONSTER_SPEED)
-  monster.increaseDifficulty(performance.now())
-
-  // Detecting when a player kills a monster
-  var new_kills1 = monster.detectShooting(player1.bullets)
-  var new_kills2 = monster.detectShooting(player2.bullets)
-  if (new_kills1) player1.updateScore(new_kills1)
-  if (new_kills2) player2.updateScore(new_kills2)
-
-  // Detecting when a player and a monster collide
-  if (monsterPlayerCollision(player1, monster.monsters)) {
-    player1.updateLives(DEFAULT_POSITION_P1)
-  }
-  if (monsterPlayerCollision(player2, monster.monsters)) {
-    player2.updateLives(DEFAULT_POSITION_P2)
-  }
-
-  renderGame()
-  if (player1.lives > 0 && player2.lives > 0) requestAnimationFrame(play)
-  else endGame(player1, player2)
-}
-
-
-// ========================
-//    Rendering function
-// ========================
-function renderGame () {
-
-  var P1_query = $('#P1')
-  var P2_query = $('#P2')
-
-  // Rendering player 1
-  P1_query.css('transform', `translate(${player1.position.y}px, ${player1.position.x}px)`)
-
-  // Rendering player 2
-  P2_query.css('transform', `translate(${player2.position.y}px, ${player2.position.x}px)`)
-
-  // Rendering the bullets of Player 1
-  player1.bullets.forEach( (bullet) => {
-    $(`#p1bullet${bullet.id}`).css('transform', `translate(${bullet.y}px, ${bullet.x}px)`)
-  })
-
-  // Rendering the bullets of Player 2
-  player2.bullets.forEach( (bullet) => {
-    $(`#p2bullet${bullet.id}`).css('transform', `translate(${bullet.y}px, ${bullet.x}px)`)
-  })
-
-  // Rendering the labyrinth blocks
-  laby.blocks.forEach( (block) => {
-    block.selector.css('transform', `translate(${block.y}px, ${block.x}px)`)
-  })
-
-  // Rendering the monsters
-  monster.monsters.forEach( (monster) => {
-    monster.selector.css('transform', `translate(${monster.y}px, ${monster.x}px)`)
-  })
-}
-
-
-// ==============================
-//    Event listener functions
-// ==============================
-  document.addEventListener('keydown', KeyDownFunc, false)
-  document.addEventListener('keyup', KeyUpFunc, false)
-
-  // Player 1 controls: QZD for movement, A for fire
-  var aPressed = false
-  var zPressed = false
-  var qPressed = false
-  var dPressed = false
-  var p1_sinceLastShot = performance.now()
-
-  // Player 2 controls: KOM for movement, I for fire
-  var iPressed = false
-  var kPressed = false
-  var oPressed = false
-  var mPressed = false
-  var p2_sinceLastShot = performance.now()
-
-
-  function KeyDownFunc (event) {
-    if (event.keyCode === 65 ) aPressed = true
-    if (event.keyCode === 90 ) zPressed = true
-    if (event.keyCode === 81 ) qPressed = true
-    if (event.keyCode === 68 ) dPressed = true
-    if (event.keyCode === 73 ) iPressed = true
-    if (event.keyCode === 75 ) kPressed = true
-    if (event.keyCode === 79 ) oPressed = true
-    if (event.keyCode === 77 ) mPressed = true
-  }
-
-  function KeyUpFunc (event) {
-    if (event.keyCode === 65 ) aPressed = false
-    if (event.keyCode === 90 ) zPressed = false
-    if (event.keyCode === 81 ) qPressed = false
-    if (event.keyCode === 68 ) dPressed = false
-    if (event.keyCode === 73 ) iPressed = false
-    if (event.keyCode === 75 ) kPressed = false
-    if (event.keyCode === 79 ) oPressed = false
-    if (event.keyCode === 77 ) mPressed = false
-  }
-
+    // onePlayerMode()
+    twoPlayerMode()
 })
 
 // ========================
@@ -349,4 +148,202 @@ function endGame (player1, player2) {
     }
     return undefined
   }
+}
+
+function twoPlayerMode() {
+  // Setting up the Game
+  var board_query = $('#board');
+  var laby = new Labyrinth(BOARD_HEIGHT, BOARD_WIDTH);
+  var player1 = new Player(400, 300, 'p1');
+  var player2 = new Player(400, 800, 'p2');
+  var monster = new MonsterFactory();
+  laby.fillScreen(); // Creating the starting landscape of the game
+  laby.createBorders(); // Creating the starting landscape, border part
+  // Start screen fading
+  init();
+  function init() {
+  setTimeout(() => {
+  $('#startScreen').remove();
+  window.cancelAnimationFrame(animationFrameID);
+  play();
+}, 5000);
+  var animationFrameID = requestAnimationFrame(start_rendering_laby);
+  function start_rendering_laby() {
+  laby.advance(LANDSCAPE_SPEED);
+  laby.eternalConstruct();
+  // Rendering the labyrinth blocks
+  laby.blocks.forEach((block) => {
+  block.selector.css('transform', `translate(${block.y}px, ${block.x}px) `);
+          });
+          requestAnimationFrame(start_rendering_laby);
+      }
+  }
+  // ===================
+  //    Play function
+  // ===================
+  function play() {
+      // This function will handle the whole game logic, executing at each requestAnimationFrame
+      var P1_cont = $('#P1container');
+      var P2_cont = $('#P2container');
+      // Player 1 moves
+      if (zPressed)
+          player1.advance(TANK_SPEED_X - LANDSCAPE_SPEED, 0);
+      if (qPressed && player1.position.y > 55)
+          player1.advance(0, TANK_SPEED_Y);
+      if (dPressed && player1.position.y < 470)
+          player1.advance(0, -TANK_SPEED_Y);
+      // Player 2 moves
+      if (oPressed)
+          player2.advance(TANK_SPEED_X - LANDSCAPE_SPEED, 0);
+      if (kPressed && player2.position.y > 630)
+          player2.advance(0, TANK_SPEED_Y);
+      if (mPressed && player2.position.y < BOARD_WIDTH - 105)
+          player2.advance(0, -TANK_SPEED_Y);
+      // If no forward movement, the tanks go back at Landscape speed
+      if (!zPressed)
+          player1.advance(-LANDSCAPE_SPEED * 2 / 3, 0);
+      if (!oPressed)
+          player2.advance(-LANDSCAPE_SPEED * 2 / 3, 0);
+      // Player 1 shoots
+      if (aPressed && performance.now() - p1_sinceLastShot > 275) {
+          let bullet_id = player1.shoot();
+          p1_sinceLastShot = performance.now(); // avoids the player shooting multiple times immediately
+          board_query.append('<div class="bullet1" id="p1bullet' + bullet_id + '"></div>'); // adding the bullet to the DOM
+      }
+      // Player 2 shoots
+      if (iPressed && performance.now() - p2_sinceLastShot > 275) {
+          let bullet_id = player2.shoot();
+          p2_sinceLastShot = performance.now();
+          board_query.append('<div class="bullet2" id="p2bullet' + bullet_id + '"></div>');
+      }
+      laby.advance(LANDSCAPE_SPEED);
+      laby.eternalConstruct();
+      player1.bulletAdvance(BULLET_SPEED_X, BULLET_SPEED_Y);
+      player2.bulletAdvance(BULLET_SPEED_X, BULLET_SPEED_Y);
+      // Checking if one of the players is out of screen
+      if (player1.position.x > BOARD_HEIGHT - 75) {
+          player1.updateLives(DEFAULT_POSITION_P1);
+          P1_cont.html("<img id='P1' src='src/snail.svg'>");
+          $('#P1announcement h1').text("FASTER! SNAIL MODE");
+          setTimeout(() => {
+              P1_cont.html("<img id='P1' src='src/Hugging_Face.png'>");
+              $('#P1announcement h1').text('');
+          }, 3000);
+      }
+      if (player2.position.x > BOARD_HEIGHT - 75) {
+          player2.updateLives(DEFAULT_POSITION_P2);
+          P2_cont.html("<img id='P2' src='src/snail.svg'>");
+          $('#P2announcement h1').text("FASTER! SNAIL MODE");
+          setTimeout(() => {
+              P2_cont.html("<img id='P2' src='src/Hugging_Face.png'>");
+              $('#P2announcement h1').text('');
+          }, 3000);
+      }
+      monster.createMonsters();
+      monster.advance(MONSTER_SPEED);
+      monster.increaseDifficulty(performance.now());
+      // Detecting when a player kills a monster
+      var new_kills1 = monster.detectShooting(player1.bullets);
+      var new_kills2 = monster.detectShooting(player2.bullets);
+      if (new_kills1)
+          player1.updateScore(new_kills1);
+      if (new_kills2)
+          player2.updateScore(new_kills2);
+      // Detecting when a player and a monster collide
+      if (monsterPlayerCollision(player1, monster.monsters)) {
+          player1.updateLives(DEFAULT_POSITION_P1);
+      }
+      if (monsterPlayerCollision(player2, monster.monsters)) {
+          player2.updateLives(DEFAULT_POSITION_P2);
+      }
+      renderGame();
+      if (player1.lives > 0 && player2.lives > 0)
+          requestAnimationFrame(play);
+      else
+          endGame(player1, player2);
+  }
+  // ========================
+  //    Rendering function
+  // ========================
+  function renderGame() {
+      var P1_query = $('#P1');
+      var P2_query = $('#P2');
+      // Rendering player 1
+      P1_query.css('transform', `translate(${player1.position.y}px, ${player1.position.x}px) `);
+      // Rendering player 2
+      P2_query.css('transform', `translate(${player2.position.y}px, ${player2.position.x}px) `);
+      // Rendering the bullets of Player 1
+      player1.bullets.forEach((bullet) => {
+          $(`#p1bullet${bullet.id}`).css('transform', `translate(${bullet.y}px, ${bullet.x}px) `);
+      });
+      // Rendering the bullets of Player 2
+      player2.bullets.forEach((bullet) => {
+          $(`#p2bullet${bullet.id}`).css('transform', `translate(${bullet.y}px, ${bullet.x}px) `);
+      });
+      // Rendering the labyrinth blocks
+      laby.blocks.forEach((block) => {
+          block.selector.css('transform', `translate(${block.y}px, ${block.x}px) `);
+      });
+      // Rendering the monsters
+      monster.monsters.forEach((monster) => {
+          monster.selector.css('transform', `translate(${monster.y}px, ${monster.x}px) `);
+      });
+  }
+  // ==============================
+  //    Event listener functions
+  // ==============================
+  document.addEventListener('keydown', KeyDownFunc, false);
+  document.addEventListener('keyup', KeyUpFunc, false);
+  // Player 1 controls: QZD for movement, A for fire
+  var aPressed = false;
+  var zPressed = false;
+  var qPressed = false;
+  var dPressed = false;
+  var p1_sinceLastShot = performance.now();
+  // Player 2 controls: KOM for movement, I for fire
+  var iPressed = false;
+  var kPressed = false;
+  var oPressed = false;
+  var mPressed = false;
+  var p2_sinceLastShot = performance.now();
+  function KeyDownFunc(event) {
+      if (event.keyCode === 65)
+          aPressed = true;
+      if (event.keyCode === 90)
+          zPressed = true;
+      if (event.keyCode === 81)
+          qPressed = true;
+      if (event.keyCode === 68)
+          dPressed = true;
+      if (event.keyCode === 73)
+          iPressed = true;
+      if (event.keyCode === 75)
+          kPressed = true;
+      if (event.keyCode === 79)
+          oPressed = true;
+      if (event.keyCode === 77)
+          mPressed = true;
+  }
+  function KeyUpFunc(event) {
+      if (event.keyCode === 65)
+          aPressed = false;
+      if (event.keyCode === 90)
+          zPressed = false;
+      if (event.keyCode === 81)
+          qPressed = false;
+      if (event.keyCode === 68)
+          dPressed = false;
+      if (event.keyCode === 73)
+          iPressed = false;
+      if (event.keyCode === 75)
+          kPressed = false;
+      if (event.keyCode === 79)
+          oPressed = false;
+      if (event.keyCode === 77)
+          mPressed = false;
+  }
+}
+
+function onePlayerMode () {
+
 }
