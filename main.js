@@ -255,7 +255,7 @@ function twoPlayerMode() {
               $('#P2announcement h1').text('');
           }, 3000);
       }
-      monster.createMonsters();
+      monster.createMonsters(false);
       monster.advance(MONSTER_SPEED);
       monster.increaseDifficulty(performance.now());
       // Detecting when a player kills a monster
@@ -369,6 +369,10 @@ function onePlayerMode () {
   // Setting up the Game
   // Only one player, no labyrinth
   // Controls: J (left) I (up) & L (right), D to shoot
+
+  // Todo: monsters shouldn't avoid area where laby is in 2-p mode
+  // style topbar
+  // endgame
   
   var board_query = $('#board');
   var laby = new Labyrinth(BOARD_HEIGHT, BOARD_WIDTH);
@@ -428,7 +432,7 @@ function onePlayerMode () {
           }, 3000);
       }
 
-      monster.createMonsters();
+      monster.createMonsters(true);
       monster.advance(MONSTER_SPEED);
       monster.increaseDifficulty(performance.now());
       

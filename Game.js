@@ -197,17 +197,28 @@ function MonsterFactory () {
   this.timeElapsed = 0
 }
 
-MonsterFactory.prototype.createMonsters = function () {
+MonsterFactory.prototype.createMonsters = function (singlePlayerMode) {
   var numberOfMonster = this.numberOfMonster
 
   while (this.monsters.length < numberOfMonster) {
     this.monstersAdded += 1
-    var y, src
+
+    // Choosing Monster X position
     var x = - Math.floor(Math.random() * 900 + 100) // -1000 < x < -100
-    var y1 = Math.floor(Math.random() * 400  + 55) // 55 < y1 < 455
-    var y2 = Math.floor(Math.random() * 380  + 625) // 625 < y2 < 1005
-    var choose_y = Math.random()
-    choose_y < 0.5 ? y = y1 : y = y2
+    // Choosing Monster Y position
+    if (singlePlayerMode) {
+      var y = Math.floor(Math.random() * 950 + 55) // 55 < y < 1005
+    }
+    else {
+      var y
+      var y1 = Math.floor(Math.random() * 400  + 55) // 55 < y1 < 455
+      var y2 = Math.floor(Math.random() * 380  + 625) // 625 < y2 < 1005
+      var choose_y = Math.random()
+      choose_y < 0.5 ? y = y1 : y = y2
+    } 
+    
+    // Choosing Monster type
+    var src
     choose_y < 0.15 ? src ="src/poo.png" : src = "src/alien.png"
 
     // Jquery part
