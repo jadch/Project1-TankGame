@@ -18,7 +18,7 @@ $(document).ready( function () {
     $('#startScreen').hide()
     $('#board').hide()
 
-    $('#singlePlayer').click( () => {
+    $('#singlePlayerBTN').click( () => {
       $('#landing').remove()
       $('#startScreen').show()
       $('#board').show()
@@ -26,7 +26,7 @@ $(document).ready( function () {
       onePlayerMode()
     })
     
-    $('#twoPlayers').click( () => {
+    $('#twoPlayersBTN').click( () => {
       $('#landing').remove()
       $('#startScreen').show()
       $('#board').show()
