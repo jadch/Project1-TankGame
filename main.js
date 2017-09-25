@@ -202,32 +202,32 @@ function twoPlayerMode() {
       var P1_cont = $('#P1container');
       var P2_cont = $('#P2container');
       // Player 1 moves
-      if (zPressed)
+      if (ePressed)
           player1.advance(TANK_SPEED_X - LANDSCAPE_SPEED, 0);
-      if (qPressed && player1.position.y > 55)
+      if (sPressed && player1.position.y > 55)
           player1.advance(0, TANK_SPEED_Y);
-      if (dPressed && player1.position.y < 470)
+      if (fPressed && player1.position.y < 470)
           player1.advance(0, -TANK_SPEED_Y);
       // Player 2 moves
-      if (oPressed)
+      if (iPressed)
           player2.advance(TANK_SPEED_X - LANDSCAPE_SPEED, 0);
-      if (kPressed && player2.position.y > 630)
+      if (jPressed && player2.position.y > 630)
           player2.advance(0, TANK_SPEED_Y);
-      if (mPressed && player2.position.y < BOARD_WIDTH - 105)
+      if (lPressed && player2.position.y < BOARD_WIDTH - 105)
           player2.advance(0, -TANK_SPEED_Y);
       // If no forward movement, the tanks go back at Landscape speed
-      if (!zPressed)
+      if (!ePressed)
           player1.advance(-LANDSCAPE_SPEED * 2 / 3, 0);
-      if (!oPressed)
+      if (!iPressed)
           player2.advance(-LANDSCAPE_SPEED * 2 / 3, 0);
       // Player 1 shoots
-      if (aPressed && performance.now() - p1_sinceLastShot > 275) {
+      if (qPressed && performance.now() - p1_sinceLastShot > 275) {
           let bullet_id = player1.shoot();
           p1_sinceLastShot = performance.now(); // avoids the player shooting multiple times immediately
           board_query.append('<div class="bullet1" id="p1bullet' + bullet_id + '"></div>'); // adding the bullet to the DOM
       }
       // Player 2 shoots
-      if (iPressed && performance.now() - p2_sinceLastShot > 275) {
+      if (uPressed && performance.now() - p2_sinceLastShot > 275) {
           let bullet_id = player2.shoot();
           p2_sinceLastShot = performance.now();
           board_query.append('<div class="bullet2" id="p2bullet' + bullet_id + '"></div>');
@@ -311,52 +311,52 @@ function twoPlayerMode() {
   document.addEventListener('keydown', KeyDownFunc, false);
   document.addEventListener('keyup', KeyUpFunc, false);
   // Player 1 controls: QZD for movement, A for fire
-  var aPressed = false;
-  var zPressed = false;
   var qPressed = false;
-  var dPressed = false;
+  var ePressed = false;
+  var sPressed = false;
+  var fPressed = false;
   var p1_sinceLastShot = performance.now();
   // Player 2 controls: KOM for movement, I for fire
+  var uPressed = false;
+  var jPressed = false;
   var iPressed = false;
-  var kPressed = false;
-  var oPressed = false;
-  var mPressed = false;
+  var lPressed = false;
   var p2_sinceLastShot = performance.now();
   function KeyDownFunc(event) {
-      if (event.keyCode === 65)
-          aPressed = true;
-      if (event.keyCode === 90)
-          zPressed = true;
-      if (event.keyCode === 81)
-          qPressed = true;
-      if (event.keyCode === 68)
-          dPressed = true;
-      if (event.keyCode === 73)
-          iPressed = true;
-      if (event.keyCode === 75)
-          kPressed = true;
-      if (event.keyCode === 79)
-          oPressed = true;
-      if (event.keyCode === 77)
-          mPressed = true;
+    if (event.keyCode === 83)
+        sPressed = true;
+    if (event.keyCode === 69)
+        ePressed = true;
+    if (event.keyCode === 70)
+        fPressed = true;
+    if (event.keyCode === 81)
+        qPressed = true;
+    if (event.keyCode === 85)
+        uPressed = true;
+    if (event.keyCode === 74)
+        jPressed = true;
+    if (event.keyCode === 73)
+        iPressed = true;
+    if (event.keyCode === 76)
+        lPressed = true;
   }
   function KeyUpFunc(event) {
-      if (event.keyCode === 65)
-          aPressed = false;
-      if (event.keyCode === 90)
-          zPressed = false;
+      if (event.keyCode === 83)
+          sPressed = false;
+      if (event.keyCode === 69)
+          ePressed = false;
+      if (event.keyCode === 70)
+          fPressed = false;
       if (event.keyCode === 81)
-          qPressed = false;
-      if (event.keyCode === 68)
-          dPressed = false;
+          sPressed = false;
+      if (event.keyCode === 85)
+          uPressed = false;
+      if (event.keyCode === 74)
+          jPressed = false;
       if (event.keyCode === 73)
           iPressed = false;
-      if (event.keyCode === 75)
-          kPressed = false;
-      if (event.keyCode === 79)
-          oPressed = false;
-      if (event.keyCode === 77)
-          mPressed = false;
+      if (event.keyCode === 76)
+          lPressed = false;
   }
 }
 
